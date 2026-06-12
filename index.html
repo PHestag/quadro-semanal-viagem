@@ -155,7 +155,7 @@
       color: #9ca3af;
     }
 
-    /* GRADE EM 4 COLUNAS NO DESKTOP */
+    /* 4 colunas no desktop */
     .grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -466,6 +466,7 @@
   </div>
 
   <script>
+    // URL publicada da sua planilha (já no formato CSV)
     const URL =
       "https://docs.google.com/spreadsheets/d/e/2PACX-1vSynGA0A1qGU6W-zmf3t14OHv0LEcPEO5aIF2aIeWAwZB5GUz8qEVUvc2GMSIhEUm5Fj61vRnBA8Jou/pub?output=csv";
 
@@ -481,6 +482,14 @@
         dados.forEach((linha) => {
           const colunas = linha.split(",");
 
+          // NOVA ORDEM DAS COLUNAS:
+          // 0: Data
+          // 1: Evento
+          // 2: SEOE
+          // 3: SEOC/SESA
+          // 4: Local
+          // 5: Observação
+          // 6: Viaturas deslocadas
           const data = colunas[0]?.trim();
           if (!data) return;
 
@@ -490,10 +499,11 @@
 
           agrupados[data].push({
             evento: colunas[1] || "-",
-            seoc: colunas[2] || "-",
-            seoe: colunas[3] || "-",
+            seoe: colunas[2] || "-",
+            seoc: colunas[3] || "-",
             local: colunas[4] || "-",
             obs: colunas[5] || "-",
+            viaturas: colunas[6] || "-"
           });
         });
 
@@ -551,13 +561,6 @@
 
                 <div class="label-group">
                   <div class="field">
-                    <div class="label">Acompanhamento SEOC</div>
-                    <div class="valor ${
-                      item.seoc === "-" ? "muted" : ""
-                    }">${item.seoc}</div>
-                  </div>
-
-                  <div class="field">
                     <div class="label">Acompanhamento SEOE</div>
                     <div class="valor ${
                       item.seoe === "-" ? "muted" : ""
@@ -565,10 +568,24 @@
                   </div>
 
                   <div class="field">
+                    <div class="label">Acompanhamento SEOC/SESA</div>
+                    <div class="valor ${
+                      item.seoc === "-" ? "muted" : ""
+                    }">${item.seoc}</div>
+                  </div>
+
+                  <div class="field">
                     <div class="label">Destino da viagem</div>
                     <div class="valor ${
                       item.local === "-" ? "muted" : ""
                     }">${item.local}</div>
+                  </div>
+
+                  <div class="field">
+                    <div class="label">Viaturas deslocadas</div>
+                    <div class="valor ${
+                      item.viaturas === "-" ? "muted" : ""
+                    }">${item.viaturas}</div>
                   </div>
                 </div>
 
