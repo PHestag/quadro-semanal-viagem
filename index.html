@@ -774,7 +774,10 @@
 
     atualizarHoje();
     carregarDados();
-    setInterval(carregarDados, 60000); // recarrega a cada 60 segundos
+    setInterval(() => {
+      atualizarHoje();
+      carregarDados();
+    }, 60000); // atualiza hora e dados a cada 60s
   </script>
 </body>
 </html>
