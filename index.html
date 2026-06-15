@@ -571,7 +571,7 @@
   </div>
 
   <script>
-    // TROQUE AQUI pela URL de publicação em CSV da sua planilha
+    // URL da planilha em CSV
     const URL =
       "https://docs.google.com/spreadsheets/d/e/2PACX-1vSynGA0A1qGU6W-zmf3t14OHv0LEcPEO5aIF2aIeWAwZB5GUz8qEVUvc2GMSIhEUm5Fj61vRnBA8Jou/pub?output=csv";
 
@@ -608,33 +608,32 @@
 
     async function carregarDados() {
       try {
-        const resposta = await fetch(URL + "&t=" + new Date().getTime());
+        const resposta = await fetch(URL + '&t=' + new Date().getTime());
         const texto = await resposta.text();
 
-        const linhas = texto.trim().split("\n");
+        const linhas = texto.trim().split('\n');
         const dados = linhas.slice(1); // pula cabeçalho
+
         const agrupados = {};
+        let centroExecutivo = '-';
+        const linhasTurno = [];
 
-        let centroExecutivo = "-";
-        let turno = "-";
-        let posto = "-";
+        dados.forEach((linha) => {
+          // se seu CSV usar ; em vez de , troque aqui para linha.split(';')
+          const colunas = linha.split(',');
 
-        dados.forEach((linha, idx) => {
-          // trata vírgulas básicas; se sua planilha usar ; em vez de , ajusta aqui
-          const colunas = linha.split(",");
-
-          const data = (colunas[0] || "").trim();
+          const data = (colunas[0] || '').trim();
           if (!data) return;
 
-          const evento = (colunas[1] || "").trim();
-          const seoe = (colunas[2] || "").trim();
-          const seoc = (colunas[3] || "").trim();
-          const local = (colunas[4] || "").trim();
-          const obs = (colunas[5] || "").trim();
-          const viaturas = (colunas[6] || "").trim();
-          const centro = (colunas[7] || "").trim();
-          const turnoCol = (colunas[8] || "").trim();
-          const postoCol = (colunas[9] || "").trim();
+          const evento = (colunas[1] || '').trim();
+          const seoe = (colunas[2] || '').trim();
+          const seoc = (colunas[3] || '').trim();
+          const local = (colunas[4] || '').trim();
+          const obs = (colunas[5] || '').trim();
+          const viaturas = (colunas[6] || '').trim();
+          const centro = (colunas[7] || '').trim();
+          const turnoCol = (colunas[8] || '').trim();
+          const postoCol = (colunas[9] || '').trim();
 
           if (!agrupados[data]) agrupados[data] = [];
           agrupados[data].push({
@@ -644,31 +643,33 @@
             local,
             viaturas,
             obs,
-            centro,
-            turno: turnoCol,
-            posto: postoCol,
           });
 
-          // usa a primeira linha com dados para preencher os cards do topo
-          if (idx === 0) {
-            if (centro) centroExecutivo = centro;
-            if (turnoCol) turno = turnoCol;
-            if (postoCol) posto = postoCol;
+          // Centro executivo: pega o primeiro que tiver valor
+          if (centro && centroExecutivo === '-') {
+            centroExecutivo = centro;
+          }
+
+          // Turno: acumula TODAS as linhas que tiverem turno
+          if (turnoCol) {
+            const linhaTurno = postoCol
+              ? `${turnoCol} · ${postoCol}`
+              : turnoCol;
+            linhasTurno.push(linhaTurno);
           }
         });
 
-        // preenche topo com centro executivo / turno / posto
-        document.getElementById("centroExecutivoNome").textContent =
-          centroExecutivo || "-";
-        document.getElementById("turnoMesclado").textContent =
-          (turno || "-") +
-          (posto ? " · " + posto : "");
+        // Preenche topo
+        document.getElementById('centroExecutivoNome').textContent =
+          centroExecutivo || '-';
+        document.getElementById('turnoMesclado').textContent =
+          linhasTurno.length > 0 ? linhasTurno.join('\n') : '-';
 
-        // monta os cards por data
-        let html = "";
+        // Monta cards por data
+        let html = '';
 
         Object.keys(agrupados).forEach((data) => {
-          const partes = data.split("/");
+          const partes = data.split('/');
           const dia = parseInt(partes[0]);
           const mes = parseInt(partes[1]) - 1;
           const ano = new Date().getFullYear();
@@ -695,14 +696,14 @@
 
           agrupados[data].forEach((item, index) => {
             const maps =
-              "https://www.google.com/maps/search/?api=1&query=" +
-              encodeURIComponent(item.local || "");
+              'https://www.google.com/maps/search/?api=1&query=' +
+              encodeURIComponent(item.local || '');
 
             html += `
               <div class="viagem">
                 <div class="viagem-header">
                   <div class="viagem-title">
-                    ${item.evento || "Atividade sem título"}
+                    ${item.evento || 'Atividade sem título'}
                   </div>
                   <div class="viagem-tag">Viagem ${index + 1}</div>
                 </div>
@@ -710,29 +711,29 @@
                 <div class="label-group">
                   <div class="field">
                     <div class="label">Acompanhamento SEOC/SESA</div>
-                    <div class="valor ${!item.seoc ? "muted" : ""}">
-                      ${item.seoc || "-"}
+                    <div class="valor ${!item.seoc ? 'muted' : ''}">
+                      ${item.seoc || '-'}
                     </div>
                   </div>
 
                   <div class="field">
                     <div class="label">Acompanhamento SEOE</div>
-                    <div class="valor ${!item.seoe ? "muted" : ""}">
-                      ${item.seoe || "-"}
+                    <div class="valor ${!item.seoe ? 'muted' : ''}">
+                      ${item.seoe || '-'}
                     </div>
                   </div>
 
                   <div class="field">
                     <div class="label">Destino da viagem</div>
-                    <div class="valor ${!item.local ? "muted" : ""}">
-                      ${item.local || "-"}
+                    <div class="valor ${!item.local ? 'muted' : ''}">
+                      ${item.local || '-'}
                     </div>
                   </div>
 
                   <div class="field">
                     <div class="label">Viaturas deslocadas</div>
-                    <div class="valor ${!item.viaturas ? "muted" : ""}">
-                      ${item.viaturas || "-"}
+                    <div class="valor ${!item.viaturas ? 'muted' : ''}">
+                      ${item.viaturas || '-'}
                     </div>
                   </div>
                 </div>
@@ -754,8 +755,8 @@
 
                 <div class="field" style="margin-top: 10px;">
                   <div class="label">Observações</div>
-                  <div class="valor ${!item.obs ? "muted" : ""}">
-                    ${item.obs || "-"}
+                  <div class="valor ${!item.obs ? 'muted' : ''}">
+                    ${item.obs || '-'}
                   </div>
                 </div>
               </div>
@@ -769,17 +770,17 @@
           `;
         });
 
-        document.getElementById("grid").innerHTML = html;
+        document.getElementById('grid').innerHTML = html;
       } catch (erro) {
         console.error(erro);
-        document.getElementById("grid").innerHTML =
-          "<h2>Erro ao carregar planilha.</h2>";
+        document.getElementById('grid').innerHTML =
+          '<h2>Erro ao carregar planilha.</h2>';
       }
     }
 
     atualizarHoje();
     carregarDados();
-    // se quiser recarregar periodicamente:
+    // Se quiser recarregar a cada 1 min:
     // setInterval(carregarDados, 60000);
   </script>
 </body>
