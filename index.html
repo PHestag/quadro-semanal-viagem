@@ -571,7 +571,6 @@
   </div>
 
   <script>
-    // URL da planilha em CSV
     const URL =
       "https://docs.google.com/spreadsheets/d/e/2PACX-1vSynGA0A1qGU6W-zmf3t14OHv0LEcPEO5aIF2aIeWAwZB5GUz8qEVUvc2GMSIhEUm5Fj61vRnBA8Jou/pub?output=csv";
 
@@ -612,14 +611,13 @@
         const texto = await resposta.text();
 
         const linhas = texto.trim().split('\n');
-        const dados = linhas.slice(1); // pula cabeçalho
+        const dados = linhas.slice(1);
 
         const agrupados = {};
         let centroExecutivo = '-';
         const linhasTurno = [];
 
         dados.forEach((linha) => {
-          // se seu CSV usar ; em vez de , troque aqui para linha.split(';')
           const colunas = linha.split(',');
 
           const data = (colunas[0] || '').trim();
@@ -645,12 +643,10 @@
             obs,
           });
 
-          // Centro executivo: pega o primeiro que tiver valor
           if (centro && centroExecutivo === '-') {
             centroExecutivo = centro;
           }
 
-          // Turno: acumula TODAS as linhas que tiverem turno
           if (turnoCol) {
             const linhaTurno = postoCol
               ? `${turnoCol} · ${postoCol}`
@@ -659,13 +655,11 @@
           }
         });
 
-        // Preenche topo
         document.getElementById('centroExecutivoNome').textContent =
           centroExecutivo || '-';
         document.getElementById('turnoMesclado').textContent =
           linhasTurno.length > 0 ? linhasTurno.join('\n') : '-';
 
-        // Monta cards por data
         let html = '';
 
         Object.keys(agrupados).forEach((data) => {
@@ -780,7 +774,7 @@
 
     atualizarHoje();
     carregarDados();
-    // setInterval(carregarDados, 60000); // se quiser recarregar a cada 1 min
+    setInterval(carregarDados, 60000); // recarrega a cada 60 segundos
   </script>
 </body>
 </html>
