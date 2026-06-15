@@ -56,7 +56,7 @@
       display: flex;
       flex-direction: column;
       gap: 14px;
-      margin-bottom: 26px;
+      margin-bottom: 20px;
     }
 
     .brand-row {
@@ -155,7 +155,83 @@
       color: #9ca3af;
     }
 
-    /* 4 colunas no desktop */
+    .today-strip {
+      margin-bottom: 14px;
+      background: linear-gradient(
+        to right,
+        rgba(15, 23, 42, 0.98),
+        rgba(15, 23, 42, 0.94)
+      );
+      border-radius: 18px;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      box-shadow: var(--shadow-soft);
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .today-main {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .today-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #9ca3af;
+      font-weight: 600;
+    }
+
+    .today-date {
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      color: #f9fafb;
+    }
+
+    .today-extra {
+      font-size: 12px;
+      color: #9ca3af;
+    }
+
+    .general-info {
+      margin-bottom: 18px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .general-info .field {
+      background: linear-gradient(
+        to bottom right,
+        rgba(15, 23, 42, 0.96),
+        rgba(15, 23, 42, 0.9)
+      );
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      padding: 10px 12px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .general-info .label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #9ca3af;
+      margin-bottom: 4px;
+    }
+
+    .general-info .valor {
+      font-size: 14px;
+      color: #e5e7eb;
+      white-space: pre-line;
+    }
+
     .grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -403,6 +479,12 @@
       opacity: 0.9;
     }
 
+    @media (max-width: 1024px) {
+      .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
     @media (max-width: 768px) {
       body {
         padding: 22px 16px;
@@ -423,6 +505,10 @@
       }
 
       .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .general-info {
         grid-template-columns: 1fr;
       }
     }
@@ -452,23 +538,73 @@
           <div class="status-label">Status de atualização</div>
           <div id="ultimaAtualizacao" class="status-value">Atualizando...</div>
           <div class="status-tagline">
-            Dados sincronizados automaticamente a cada 1 minuto
+            Dados sincronizados automaticamente a partir da planilha
           </div>
         </div>
+      </div>
+    </div>
+
+    <div class="today-strip">
+      <div class="today-main">
+        <div class="today-label">Hoje</div>
+        <div class="today-date" id="todayDate">Hoje</div>
+        <div class="today-extra" id="todayExtra"></div>
+      </div>
+    </div>
+
+    <div class="general-info">
+      <div class="field">
+        <div class="label">Centro executivo · Ramal 5128</div>
+        <div class="valor" id="centroExecutivoNome">-</div>
+      </div>
+      <div class="field">
+        <div class="label">Turno · posto lotado</div>
+        <div class="valor" id="turnoMesclado">-</div>
       </div>
     </div>
 
     <div class="grid" id="grid"></div>
 
     <div class="footer">
-      Quadro operacional de viagens
+      Quadro operacional de viagens · dados ao vivo da planilha
     </div>
   </div>
 
   <script>
-    // URL publicada da sua planilha (já no formato CSV)
+    // TROQUE AQUI pela URL de publicação em CSV da sua planilha
     const URL =
-      "https://docs.google.com/spreadsheets/d/e/2PACX-1vSynGA0A1qGU6W-zmf3t14OHv0LEcPEO5aIF2aIeWAwZB5GUz8qEVUvc2GMSIhEUm5Fj61vRnBA8Jou/pub?output=csv";
+      "SUA_URL_CSV_AQUI";
+
+    const diasSemana = [
+      'Domingo',
+      'Segunda-feira',
+      'Terça-feira',
+      'Quarta-feira',
+      'Quinta-feira',
+      'Sexta-feira',
+      'Sábado',
+    ];
+
+    function atualizarHoje() {
+      const agora = new Date();
+      const opcoes = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      };
+      const texto = agora.toLocaleDateString('pt-BR', opcoes);
+      const formatado = texto.charAt(0).toUpperCase() + texto.slice(1);
+
+      document.getElementById('todayDate').textContent = formatado;
+      document.getElementById('todayExtra').textContent =
+        'Dia atual para referência rápida no quadro semanal.';
+      document.getElementById('ultimaAtualizacao').textContent =
+        'Atualizado em ' +
+        agora.toLocaleDateString('pt-BR') +
+        ' · ' +
+        agora.toLocaleTimeString('pt-BR');
+    }
 
     async function carregarDados() {
       try {
@@ -476,47 +612,59 @@
         const texto = await resposta.text();
 
         const linhas = texto.trim().split("\n");
-        const dados = linhas.slice(1);
+        const dados = linhas.slice(1); // pula cabeçalho
         const agrupados = {};
 
-        dados.forEach((linha) => {
+        let centroExecutivo = "-";
+        let turno = "-";
+        let posto = "-";
+
+        dados.forEach((linha, idx) => {
+          // trata vírgulas básicas; se sua planilha usar ; em vez de , ajusta aqui
           const colunas = linha.split(",");
 
-          // NOVA ORDEM DAS COLUNAS:
-          // 0: Data
-          // 1: Evento
-          // 2: SEOE
-          // 3: SEOC/SESA
-          // 4: Local
-          // 5: Observação
-          // 6: Viaturas deslocadas
-          const data = colunas[0]?.trim();
+          const data = (colunas[0] || "").trim();
           if (!data) return;
 
-          if (!agrupados[data]) {
-            agrupados[data] = [];
-          }
+          const evento = (colunas[1] || "").trim();
+          const seoe = (colunas[2] || "").trim();
+          const seoc = (colunas[3] || "").trim();
+          const local = (colunas[4] || "").trim();
+          const obs = (colunas[5] || "").trim();
+          const viaturas = (colunas[6] || "").trim();
+          const centro = (colunas[7] || "").trim();
+          const turnoCol = (colunas[8] || "").trim();
+          const postoCol = (colunas[9] || "").trim();
 
+          if (!agrupados[data]) agrupados[data] = [];
           agrupados[data].push({
-            evento: colunas[1] || "-",
-            seoe: colunas[2] || "-",
-            seoc: colunas[3] || "-",
-            local: colunas[4] || "-",
-            obs: colunas[5] || "-",
-            viaturas: colunas[6] || "-"
+            evento,
+            seoc,
+            seoe,
+            local,
+            viaturas,
+            obs,
+            centro,
+            turno: turnoCol,
+            posto: postoCol,
           });
+
+          // usa a primeira linha com dados para preencher os cards do topo
+          if (idx === 0) {
+            if (centro) centroExecutivo = centro;
+            if (turnoCol) turno = turnoCol;
+            if (postoCol) posto = postoCol;
+          }
         });
 
-        const diasSemana = [
-          "Domingo",
-          "Segunda-feira",
-          "Terça-feira",
-          "Quarta-feira",
-          "Quinta-feira",
-          "Sexta-feira",
-          "Sábado",
-        ];
+        // preenche topo com centro executivo / turno / posto
+        document.getElementById("centroExecutivoNome").textContent =
+          centroExecutivo || "-";
+        document.getElementById("turnoMesclado").textContent =
+          (turno || "-") +
+          (posto ? " · " + posto : "");
 
+        // monta os cards por data
         let html = "";
 
         Object.keys(agrupados).forEach((data) => {
@@ -548,7 +696,7 @@
           agrupados[data].forEach((item, index) => {
             const maps =
               "https://www.google.com/maps/search/?api=1&query=" +
-              encodeURIComponent(item.local);
+              encodeURIComponent(item.local || "");
 
             html += `
               <div class="viagem">
@@ -561,31 +709,31 @@
 
                 <div class="label-group">
                   <div class="field">
-                    <div class="label">Acompanhamento SEOE</div>
-                    <div class="valor ${
-                      item.seoe === "-" ? "muted" : ""
-                    }">${item.seoe}</div>
+                    <div class="label">Acompanhamento SEOC/SESA</div>
+                    <div class="valor ${!item.seoc ? "muted" : ""}">
+                      ${item.seoc || "-"}
+                    </div>
                   </div>
 
                   <div class="field">
-                    <div class="label">Acompanhamento SEOC/SESA</div>
-                    <div class="valor ${
-                      item.seoc === "-" ? "muted" : ""
-                    }">${item.seoc}</div>
+                    <div class="label">Acompanhamento SEOE</div>
+                    <div class="valor ${!item.seoe ? "muted" : ""}">
+                      ${item.seoe || "-"}
+                    </div>
                   </div>
 
                   <div class="field">
                     <div class="label">Destino da viagem</div>
-                    <div class="valor ${
-                      item.local === "-" ? "muted" : ""
-                    }">${item.local}</div>
+                    <div class="valor ${!item.local ? "muted" : ""}">
+                      ${item.local || "-"}
+                    </div>
                   </div>
 
                   <div class="field">
                     <div class="label">Viaturas deslocadas</div>
-                    <div class="valor ${
-                      item.viaturas === "-" ? "muted" : ""
-                    }">${item.viaturas}</div>
+                    <div class="valor ${!item.viaturas ? "muted" : ""}">
+                      ${item.viaturas || "-"}
+                    </div>
                   </div>
                 </div>
 
@@ -606,9 +754,9 @@
 
                 <div class="field" style="margin-top: 10px;">
                   <div class="label">Observações</div>
-                  <div class="valor ${
-                    item.obs === "-" ? "muted" : ""
-                  }">${item.obs}</div>
+                  <div class="valor ${!item.obs ? "muted" : ""}">
+                    ${item.obs || "-"}
+                  </div>
                 </div>
               </div>
             `;
@@ -622,12 +770,6 @@
         });
 
         document.getElementById("grid").innerHTML = html;
-
-        const agora = new Date();
-        document.getElementById("ultimaAtualizacao").innerText =
-          agora.toLocaleDateString("pt-BR") +
-          " · " +
-          agora.toLocaleTimeString("pt-BR");
       } catch (erro) {
         console.error(erro);
         document.getElementById("grid").innerHTML =
@@ -635,8 +777,10 @@
       }
     }
 
+    atualizarHoje();
     carregarDados();
-    setInterval(carregarDados, 60000);
+    // se quiser recarregar periodicamente:
+    // setInterval(carregarDados, 60000);
   </script>
 </body>
 </html>
