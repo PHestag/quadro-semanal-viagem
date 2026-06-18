@@ -49,7 +49,7 @@
     .page-frame {
       min-height: 100vh;
       position: relative;
-      padding: 32px 20px;
+      padding: 24px 8px; /* menos espaço nas laterais */
       display: flex;
       justify-content: center;
     }
@@ -60,8 +60,8 @@
       position: fixed;
       top: 0;
       bottom: 0;
-      width: 260px; /* largura da faixa lateral */
-      background-image: url("bg-itaipu-dashboard.jpg"); /* use o nome do arquivo da imagem */
+      width: 340px; /* aumentada para encostar mais no quadro */
+      background-image: url("bg-itaipu-dashboard.jpg");
       background-repeat: no-repeat;
       background-size: cover;
       background-position: center;
@@ -75,7 +75,7 @@
 
     .page-frame::after {
       right: 0;
-      transform: scaleX(-1); /* espelha para reutilizar a mesma imagem do outro lado */
+      transform: scaleX(-1);
     }
 
     .shell {
@@ -83,7 +83,6 @@
       z-index: 1;
       max-width: 1240px;
       width: 100%;
-      /* leve fundo para destacar o painel do fundo escuro */
       background:
         radial-gradient(circle at top left, rgba(31, 41, 55, 0.9) 0, transparent 55%),
         radial-gradient(circle at bottom right, rgba(127, 29, 29, 0.6) 0, transparent 60%),
@@ -273,7 +272,6 @@
       white-space: pre-line;
     }
 
-    /* grid vira lista de containers por dia */
     .grid {
       display: flex;
       flex-direction: column;
@@ -281,7 +279,6 @@
       margin-top: 10px;
     }
 
-    /* container do dia */
     .day-container {
       border-radius: 20px;
       border: 1px solid rgba(148, 163, 184, 0.45);
@@ -355,7 +352,6 @@
       margin-bottom: 10px;
     }
 
-    /* cards por dia (quebram linha) */
     .viagens-row {
       display: flex;
       flex-wrap: wrap;
@@ -524,17 +520,24 @@
       opacity: 0.9;
     }
 
+    @media (max-width: 1200px) {
+      .page-frame::before,
+      .page-frame::after {
+        width: 280px;
+      }
+    }
+
     @media (max-width: 992px) {
       .page-frame::before,
       .page-frame::after {
-        width: 180px;
+        width: 220px;
       }
     }
 
     @media (max-width: 768px) {
       .page-frame::before,
       .page-frame::after {
-        display: none; /* em telas muito pequenas, some com a moldura para ganhar espaço */
+        display: none;
       }
 
       .page-frame {
