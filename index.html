@@ -314,28 +314,13 @@
       margin-bottom: 10px;
     }
 
-    /* faixa horizontal de cards por dia */
+    /* faixa de cards por dia – agora com quebra de linha */
     .viagens-row {
       display: flex;
-      flex-wrap: nowrap;
+      flex-wrap: wrap;   /* quebra pra baixo */
       gap: 18px;
-      overflow-x: auto;
       padding-bottom: 4px;
       padding-right: 4px;
-    }
-
-    .viagens-row::-webkit-scrollbar {
-      height: 6px;
-    }
-
-    .viagens-row::-webkit-scrollbar-track {
-      background: rgba(15, 23, 42, 0.9);
-      border-radius: 999px;
-    }
-
-    .viagens-row::-webkit-scrollbar-thumb {
-      background: rgba(148, 163, 184, 0.8);
-      border-radius: 999px;
     }
 
     .card {
@@ -352,7 +337,7 @@
       overflow: hidden;
       min-width: 260px;
       max-width: 320px;
-      flex: 0 0 auto;
+      flex: 1 1 260px;   /* permite quebrar para a próxima linha */
     }
 
     .card::before {
