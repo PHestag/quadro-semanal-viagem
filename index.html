@@ -232,61 +232,33 @@
       white-space: pre-line;
     }
 
+    /* grid vira lista de containers por dia */
     .grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
       margin-top: 10px;
     }
 
-    .card {
-      position: relative;
-      border-radius: var(--radius-lg);
-      padding: 18px 18px 16px;
+    /* container do dia */
+    .day-container {
+      border-radius: 20px;
+      border: 1px solid rgba(148, 163, 184, 0.45);
       background: linear-gradient(
-          to bottom right,
-          rgba(15, 23, 42, 0.96),
-          rgba(15, 23, 42, 0.92)
-        );
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      box-shadow: var(--shadow-soft);
-      backdrop-filter: blur(18px) saturate(170%);
-      -webkit-backdrop-filter: blur(18px) saturate(170%);
-      overflow: hidden;
-    }
-
-    .card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(
-        circle at top right,
-        rgba(248, 250, 252, 0.1),
-        transparent 55%
+        to bottom right,
+        rgba(15, 23, 42, 0.98),
+        rgba(15, 23, 42, 0.94)
       );
-      opacity: 0.7;
-      pointer-events: none;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.4);
+      padding: 14px 14px 12px;
     }
 
-    .card-inner {
-      position: relative;
-      z-index: 1;
-    }
-
-    .header-card {
+    .day-header {
       display: flex;
       align-items: baseline;
       justify-content: space-between;
       gap: 10px;
-      margin-bottom: 12px;
-    }
-
-    .dia {
-      font-size: 14px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #e5e7eb;
+      margin-bottom: 8px;
     }
 
     .dia-label {
@@ -295,6 +267,14 @@
       color: #9ca3af;
       text-transform: uppercase;
       letter-spacing: 0.15em;
+    }
+
+    .dia {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #e5e7eb;
     }
 
     .data {
@@ -331,25 +311,66 @@
         rgba(148, 163, 184, 0.55),
         rgba(148, 163, 184, 0.0)
       );
-      margin-bottom: 6px;
+      margin-bottom: 10px;
     }
 
-    .viagens {
+    /* faixa horizontal de cards por dia */
+    .viagens-row {
       display: flex;
-      flex-direction: column;
-      gap: 14px;
+      flex-wrap: nowrap;
+      gap: 18px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      padding-right: 4px;
     }
 
-    .viagem {
-      border-radius: var(--radius-md);
-      padding: 10px 10px 10px;
+    .viagens-row::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .viagens-row::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.9);
+      border-radius: 999px;
+    }
+
+    .viagens-row::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, 0.8);
+      border-radius: 999px;
+    }
+
+    .card {
+      position: relative;
+      border-radius: var(--radius-lg);
+      padding: 14px 14px 12px;
       background: linear-gradient(
-        135deg,
-        rgba(15, 23, 42, 0.98),
-        rgba(15, 23, 42, 0.92)
+          to bottom right,
+          rgba(15, 23, 42, 0.96),
+          rgba(15, 23, 42, 0.92)
+        );
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      min-width: 260px;
+      max-width: 320px;
+      flex: 0 0 auto;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        circle at top right,
+        rgba(248, 250, 252, 0.12),
+        transparent 55%
       );
-      border: 1px solid rgba(51, 65, 85, 0.7);
-      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.55);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .card-inner {
+      position: relative;
+      z-index: 1;
     }
 
     .viagem-header {
@@ -381,8 +402,8 @@
 
     .label-group {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      column-gap: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      column-gap: 10px;
       row-gap: 8px;
       margin-top: 4px;
     }
@@ -450,8 +471,6 @@
       text-transform: uppercase;
       border: 1px solid rgba(191, 219, 254, 0.6);
       box-shadow: 0 10px 22px rgba(37, 99, 235, 0.4);
-      transition: transform 0.16s ease, box-shadow 0.16s ease,
-        background 0.16s ease;
     }
 
     .maps-btn-icon {
@@ -479,12 +498,6 @@
       opacity: 0.9;
     }
 
-    @media (max-width: 1024px) {
-      .grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
     @media (max-width: 768px) {
       body {
         padding: 22px 16px;
@@ -504,12 +517,12 @@
         align-items: flex-start;
       }
 
-      .grid {
+      .general-info {
         grid-template-columns: 1fr;
       }
 
-      .general-info {
-        grid-template-columns: 1fr;
+      .viagens-row {
+        gap: 12px;
       }
     }
   </style>
@@ -662,7 +675,17 @@
 
         let html = '';
 
-        Object.keys(agrupados).forEach((data) => {
+        // ordenar datas
+        const datasOrdenadas = Object.keys(agrupados).sort((a, b) => {
+          const [diaA, mesA] = a.split('/');
+          const [diaB, mesB] = b.split('/');
+          const ano = new Date().getFullYear();
+          const dataA = new Date(ano, parseInt(mesA) - 1, parseInt(diaA));
+          const dataB = new Date(ano, parseInt(mesB) - 1, parseInt(diaB));
+          return dataA - dataB;
+        });
+
+        datasOrdenadas.forEach((data) => {
           const partes = data.split('/');
           const dia = parseInt(partes[0]);
           const mes = parseInt(partes[1]) - 1;
@@ -672,20 +695,19 @@
           const diaSemana = diasSemana[dataObj.getDay()];
 
           html += `
-            <div class="card">
-              <div class="card-inner">
-                <div class="header-card">
-                  <div>
-                    <div class="dia-label">Dia da operação</div>
-                    <div class="dia">${diaSemana}</div>
-                  </div>
-                  <div class="data">
-                    <div class="data-text">${data}</div>
-                    <div class="data-chip">Agenda do dia</div>
-                  </div>
+            <div class="day-container">
+              <div class="day-header">
+                <div>
+                  <div class="dia-label">Dia da operação</div>
+                  <div class="dia">${diaSemana}</div>
                 </div>
-                <div class="divider"></div>
-                <div class="viagens">
+                <div class="data">
+                  <div class="data-text">${data}</div>
+                  <div class="data-chip">Agenda do dia</div>
+                </div>
+              </div>
+              <div class="divider"></div>
+              <div class="viagens-row">
           `;
 
           agrupados[data].forEach((item, index) => {
@@ -694,63 +716,65 @@
               encodeURIComponent(item.local || '');
 
             html += `
-              <div class="viagem">
-                <div class="viagem-header">
-                  <div class="viagem-title">
-                    ${item.local || 'Destino não informado'}
+              <div class="card">
+                <div class="card-inner">
+                  <div class="viagem-header">
+                    <div class="viagem-title">
+                      ${item.local || 'Destino não informado'}
+                    </div>
+                    <div class="viagem-tag">Viagem ${index + 1}</div>
                   </div>
-                  <div class="viagem-tag">Viagem ${index + 1}</div>
-                </div>
 
-                <div class="label-group">
-                  <div class="field">
-                    <div class="label">Acompanhamento SEOC/SESA</div>
-                    <div class="valor ${!item.seoc ? 'muted' : ''}">
-                      ${item.seoc || '-'}
+                  <div class="label-group">
+                    <div class="field">
+                      <div class="label">Acompanhamento SEOC/SESA</div>
+                      <div class="valor ${!item.seoc ? 'muted' : ''}">
+                        ${item.seoc || '-'}
+                      </div>
+                    </div>
+
+                    <div class="field">
+                      <div class="label">Acompanhamento SEOE</div>
+                      <div class="valor ${!item.seoe ? 'muted' : ''}">
+                        ${item.seoe || '-'}
+                      </div>
+                    </div>
+
+                    <div class="field">
+                      <div class="label">Evento</div>
+                      <div class="valor ${!item.evento ? 'muted' : ''}">
+                        ${item.evento || '-'}
+                      </div>
+                    </div>
+
+                    <div class="field">
+                      <div class="label">Viaturas deslocadas</div>
+                      <div class="valor ${!item.viaturas ? 'muted' : ''}">
+                        ${item.viaturas || '-'}
+                      </div>
                     </div>
                   </div>
 
-                  <div class="field">
-                    <div class="label">Acompanhamento SEOE</div>
-                    <div class="valor ${!item.seoe ? 'muted' : ''}">
-                      ${item.seoe || '-'}
-                    </div>
+                  <div class="maps-row">
+                    <span class="maps-info">
+                      Visualizar localização no Google Maps
+                    </span>
+                    <a
+                      class="maps-btn"
+                      href="${maps}"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <span class="maps-btn-icon">▲</span>
+                      Ver rota
+                    </a>
                   </div>
 
-                  <div class="field">
-                    <div class="label">Evento</div>
-                    <div class="valor ${!item.evento ? 'muted' : ''}">
-                      ${item.evento || '-'}
+                  <div class="field" style="margin-top: 10px;">
+                    <div class="label">Observações</div>
+                    <div class="valor ${!item.obs ? 'muted' : ''}">
+                      ${item.obs || '-'}
                     </div>
-                  </div>
-
-                  <div class="field">
-                    <div class="label">Viaturas deslocadas</div>
-                    <div class="valor ${!item.viaturas ? 'muted' : ''}">
-                      ${item.viaturas || '-'}
-                    </div>
-                  </div>
-                </div>
-
-                <div class="maps-row">
-                  <span class="maps-info">
-                    Visualizar localização no Google Maps
-                  </span>
-                  <a
-                    class="maps-btn"
-                    href="${maps}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <span class="maps-btn-icon">▲</span>
-                    Ver rota
-                  </a>
-                </div>
-
-                <div class="field" style="margin-top: 10px;">
-                  <div class="label">Observações</div>
-                  <div class="valor ${!item.obs ? 'muted' : ''}">
-                    ${item.obs || '-'}
                   </div>
                 </div>
               </div>
@@ -758,7 +782,6 @@
           });
 
           html += `
-                </div>
               </div>
             </div>
           `;
@@ -777,7 +800,7 @@
     setInterval(() => {
       atualizarHoje();
       carregarDados();
-    }, 60000); // atualiza hora e dados a cada 60s
+    }, 60000);
   </script>
 </body>
 </html>
