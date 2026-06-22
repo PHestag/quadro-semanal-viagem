@@ -191,7 +191,6 @@
       text-align: right;
     }
 
-    .topbar p,
     .maps-info,
     .footer {
       font-size: 13px;
@@ -999,6 +998,24 @@
         `;
       }
     }
+
+    const estiloPorTipo = {
+      'Acompanhamento em Evento': {
+        classe: 'accent-green',
+        diaSoft: 'rgba(75,122,90,0.10)',
+        pill: 'background: rgba(75,122,90,0.15); color: #d1dfd6; border: 1px solid rgba(75,122,90,0.24);'
+      },
+      'Viagem': {
+        classe: 'accent-blue',
+        diaSoft: 'rgba(59,130,246,0.10)',
+        pill: 'background: rgba(59,130,246,0.14); color: #c9dcff; border: 1px solid rgba(59,130,246,0.24);'
+      },
+      'Padrão': {
+        classe: 'accent-violet',
+        diaSoft: 'rgba(76,93,122,0.10)',
+        pill: 'background: rgba(76,93,122,0.16); color: #cad3e2; border: 1px solid rgba(76,93,122,0.24);'
+      }
+    };
 
     atualizarHoje();
     carregarDadosPlanilha();
