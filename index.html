@@ -16,28 +16,20 @@
     :root {
       --bg: #07111f;
       --bg-2: #0b1730;
-      --surface: rgba(10, 19, 38, 0.92);
-      --surface-2: rgba(15, 27, 51, 0.92);
-      --surface-soft: rgba(19, 35, 65, 0.82);
       --text: #eef2ff;
       --muted: #a8b2c7;
       --faint: #7f8aa3;
-      --border: rgba(148, 163, 184, 0.22);
-      --shadow: 0 20px 50px rgba(2, 6, 23, 0.42);
       --radius-xl: 22px;
       --radius-lg: 18px;
       --radius-md: 12px;
+      --shadow: 0 20px 50px rgba(2, 6, 23, 0.42);
 
       --blue: #38bdf8;
       --blue-soft: rgba(56, 189, 248, 0.14);
       --green: #22c55e;
       --green-soft: rgba(34, 197, 94, 0.16);
-      --amber: #f59e0b;
-      --amber-soft: rgba(245, 158, 11, 0.16);
       --violet: #8b5cf6;
       --violet-soft: rgba(139, 92, 246, 0.16);
-      --rose: #f43f5e;
-      --rose-soft: rgba(244, 63, 94, 0.16);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -54,12 +46,36 @@
 
     .page-frame {
       min-height: 100vh;
+      position: relative;
       padding: 24px 12px;
       display: flex;
       justify-content: center;
     }
 
+    .page-frame::before,
+    .page-frame::after {
+      content: "";
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 300px;
+      background-image:
+        linear-gradient(rgba(2, 6, 23, 0.42), rgba(2, 6, 23, 0.42)),
+        var(--bg-lateral);
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.82;
+    }
+
+    .page-frame::before { left: 0; }
+    .page-frame::after { right: 0; transform: scaleX(-1); }
+
     .shell {
+      position: relative;
+      z-index: 1;
       width: 100%;
       max-width: 1260px;
       background:
@@ -80,18 +96,22 @@
     }
 
     .brand-row,
-    .topbar-header,
-    .today-strip,
-    .stats-row {
+    .topbar-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 16px;
     }
 
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
     .brand-left,
     .title-block,
-    .today-main,
     .status-block {
       display: flex;
       flex-direction: column;
@@ -100,7 +120,6 @@
 
     .brand-title,
     .label,
-    .today-label,
     .status-label,
     .card-kicker,
     .day-kicker {
@@ -159,27 +178,23 @@
       max-width: 680px;
     }
 
+    .status-block {
+      align-items: flex-end;
+      text-align: right;
+    }
+
     .topbar p,
-    .status-tagline,
-    .today-extra,
     .maps-info,
     .footer {
       font-size: 13px;
       color: var(--muted);
     }
 
-    .status-block {
-      align-items: flex-end;
-      text-align: right;
-    }
-
-    .status-value,
-    .today-date {
+    .status-value {
       font-weight: 700;
       color: #fff;
     }
 
-    .today-strip,
     .general-info .field,
     .stat-card,
     .day-container,
@@ -191,57 +206,17 @@
         inset 0 0 0 1px rgba(255,255,255,0.03);
     }
 
-    .today-strip {
-      border-radius: var(--radius-xl);
-      padding: 16px 18px;
-      margin-bottom: 16px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .today-strip::after {
-      content: "";
-      position: absolute;
-      inset: auto -30px -30px auto;
-      width: 140px;
-      height: 140px;
-      background: radial-gradient(circle, rgba(37, 99, 235, 0.16), transparent 65%);
-      pointer-events: none;
-    }
-
-    .today-date { font-size: 22px; }
-
-    .today-highlight {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px 14px;
-      border-radius: 16px;
-      background: linear-gradient(135deg, rgba(37,99,235,0.15), rgba(51,65,85,0.18));
-      border: 1px solid rgba(37,99,235,0.22);
-    }
-
-    .today-highlight strong { font-size: 14px; }
-
-    .general-info,
-    .stats-row {
+    .general-info {
       display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 12px;
       margin-bottom: 18px;
     }
-
-    .general-info { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .stats-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
     .field,
     .stat-card {
       border-radius: var(--radius-lg);
       padding: 14px;
-    }
-
-    .field {
-      outline: 1px solid rgba(255,255,255,0.04);
-      outline-offset: -1px;
     }
 
     .valor,
@@ -256,8 +231,6 @@
       position: relative;
       overflow: hidden;
       min-height: 110px;
-      outline: 1px solid rgba(255,255,255,0.05);
-      outline-offset: -1px;
     }
 
     .stat-card::before {
@@ -284,6 +257,8 @@
       font-size: 26px;
       font-weight: 800;
       margin: 8px 0 4px;
+      position: relative;
+      z-index: 1;
     }
 
     .stat-note {
@@ -305,10 +280,6 @@
       padding: 16px;
       position: relative;
       overflow: hidden;
-      border: 1.5px solid rgba(255,255,255,0.18);
-      box-shadow:
-        0 18px 40px rgba(0,0,0,0.30),
-        inset 0 0 0 1px rgba(255,255,255,0.03);
     }
 
     .day-container::before {
@@ -374,10 +345,6 @@
       padding: 16px;
       overflow: hidden;
       isolation: isolate;
-      border: 1.5px solid rgba(255,255,255,0.16);
-      box-shadow:
-        0 18px 35px rgba(0,0,0,0.28),
-        inset 0 0 0 1px rgba(255,255,255,0.025);
     }
 
     .card::before {
@@ -437,10 +404,6 @@
       box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
     }
 
-    .label-box.emphasis {
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
-    }
-
     .value-pill {
       display: inline-flex;
       align-items: center;
@@ -454,51 +417,6 @@
       background: rgba(255,255,255,0.06);
       color: var(--text);
     }
-
-    .label-box.box-seoc {
-      border: 1px solid rgba(70, 116, 145, 0.48);
-      background: linear-gradient(180deg, rgba(35, 65, 85, 0.28), rgba(35, 65, 85, 0.10));
-      box-shadow: inset 0 0 0 1px rgba(70, 116, 145, 0.10);
-    }
-
-    .label-box.box-seoe {
-      border: 1px solid rgba(64, 92, 74, 0.50);
-      background: linear-gradient(180deg, rgba(40, 72, 58, 0.28), rgba(40, 72, 58, 0.10));
-      box-shadow: inset 0 0 0 1px rgba(64, 92, 74, 0.10);
-    }
-
-    .label-box.box-evento {
-      border: 1px solid rgba(176, 122, 86, 0.48);
-      background: linear-gradient(180deg, rgba(92, 61, 40, 0.26), rgba(92, 61, 40, 0.10));
-      box-shadow: inset 0 0 0 1px rgba(176, 122, 86, 0.10);
-    }
-
-    .label-box.box-viaturas {
-      border: 1px solid rgba(72, 61, 139, 0.48);
-      background: linear-gradient(180deg, rgba(40, 33, 68, 0.28), rgba(40, 33, 68, 0.10));
-      box-shadow: inset 0 0 0 1px rgba(72, 61, 139, 0.10);
-    }
-
-    .label-box.box-obs {
-      border: 1px solid rgba(113, 61, 69, 0.52);
-      background: linear-gradient(180deg, rgba(87, 59, 76, 0.28), rgba(87, 59, 76, 0.10));
-      box-shadow: inset 0 0 0 1px rgba(113, 61, 69, 0.10);
-    }
-
-    .box-seoc .value-pill,
-    .box-seoc .label { color: #b4c4e9; }
-
-    .box-seoe .value-pill,
-    .box-seoe .label { color: #b7cbbd; }
-
-    .box-evento .value-pill,
-    .box-evento .label { color: #d7b08d; }
-
-    .box-viaturas .value-pill,
-    .box-viaturas .label { color: #c4bfdf; }
-
-    .box-obs .value-pill,
-    .box-obs .label { color: #d0b2bb; }
 
     .valor.muted { color: var(--faint); font-style: italic; }
 
@@ -528,13 +446,6 @@
       background: linear-gradient(135deg, #1d4ed8, #1e40af);
       border: 1px solid rgba(191, 219, 254, 0.40);
       box-shadow: 0 12px 24px rgba(29, 78, 216, 0.24);
-      transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
-    }
-
-    .maps-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 16px 30px rgba(29, 78, 216, 0.34);
-      filter: brightness(1.05);
     }
 
     .maps-btn-icon {
@@ -556,19 +467,23 @@
 
     .accent-blue   { --card-accent: #3b82f6; --card-accent-soft: rgba(59,130,246,0.14); }
     .accent-green  { --card-accent: #4b7a5a; --card-accent-soft: rgba(75,122,90,0.14); }
-    .accent-amber  { --card-accent: #b27a01; --card-accent-soft: rgba(178,122,1,0.14); }
     .accent-violet { --card-accent: #4c5d7a; --card-accent-soft: rgba(76,93,122,0.14); }
-    .accent-rose   { --card-accent: #7a4b55; --card-accent-soft: rgba(122,75,85,0.14); }
+
+    @media (max-width: 1200px) {
+      .page-frame::before, .page-frame::after { width: 220px; }
+    }
 
     @media (max-width: 900px) {
+      .page-frame::before, .page-frame::after { display: none; }
       .general-info { grid-template-columns: 1fr; }
+      .stats-row { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 768px) {
       .page-frame { padding: 12px; }
       .shell { padding: 16px; border-radius: 22px; }
 
-      .brand-row, .topbar-header, .today-strip {
+      .brand-row, .topbar-header {
         flex-direction: column;
         align-items: flex-start;
       }
@@ -577,8 +492,6 @@
         align-items: flex-start;
         text-align: left;
       }
-
-      .stats-row { grid-template-columns: 1fr; }
 
       .maps-row, .viagem-header {
         flex-direction: column;
@@ -626,21 +539,6 @@
         </div>
       </div>
 
-      <div class="today-strip">
-        <div class="today-main">
-          <div class="today-label">Hoje</div>
-          <div class="today-date" id="todayDate">Hoje</div>
-          <div class="today-extra" id="todayExtra"></div>
-        </div>
-
-        <div class="today-highlight">
-          <div>
-            <div class="today-label">Destaque</div>
-            <strong id="hojeResumo">Carregando agenda do dia...</strong>
-          </div>
-        </div>
-      </div>
-
       <div class="general-info">
         <div class="field">
           <div class="label">Centro executivo · Ramal 5128</div>
@@ -654,16 +552,22 @@
       </div>
 
       <div class="stats-row">
-        <div class="stat-card" style="--accent: #3b82f6; --accent-soft: rgba(59,130,246,0.14);">
-          <div class="card-kicker">Viagens na semana</div>
-          <div class="stat-value" id="totalViagens">0</div>
-          <div class="stat-note" id="periodoSemana">00/00 - 00/00</div>
+        <div class="stat-card" style="--accent: #4b7a5a; --accent-soft: rgba(75,122,90,0.14);">
+          <div class="card-kicker">Eventos na semana</div>
+          <div class="stat-value" id="totalEventosSemana">0</div>
+          <div class="stat-note" id="periodoSemanaEventos">00/00 - 00/00</div>
         </div>
 
-        <div class="stat-card" style="--accent: #4b7a5a; --accent-soft: rgba(75,122,90,0.14);">
+        <div class="stat-card" style="--accent: #3b82f6; --accent-soft: rgba(59,130,246,0.14);">
+          <div class="card-kicker">Viagens na semana</div>
+          <div class="stat-value" id="totalViagensSemana">0</div>
+          <div class="stat-note" id="periodoSemanaViagens">00/00 - 00/00</div>
+        </div>
+
+        <div class="stat-card" style="--accent: #4c5d7a; --accent-soft: rgba(76,93,122,0.14);">
           <div class="card-kicker">Dias com operação</div>
           <div class="stat-value" id="totalDias">0</div>
-          <div class="stat-note">Dias com pelo menos um card de operação</div>
+          <div class="stat-note">Dias com pelo menos um card</div>
         </div>
       </div>
 
@@ -677,6 +581,14 @@
 
   <script>
     const URL_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSynGA0A1qGU6W-zmf3t14OHv0LEcPEO5aIF2aIeWAwZB5GUz8qEVUvc2GMSIhEUm5Fj61vRnBA8Jou/pub?output=csv';
+    const IMAGEM_LATERAL_URL = 'https://raw.githubusercontent.com/PHestag/quadro-semanal-viagem/refs/heads/main/bg-itaipu-dashboard.jpg';
+
+    document.documentElement.style.setProperty(
+      '--bg-lateral',
+      IMAGEM_LATERAL_URL && IMAGEM_LATERAL_URL !== 'https://raw.githubusercontent.com/PHestag/quadro-semanal-viagem/refs/heads/main/bg-itaipu-dashboard.jpg'
+        ? `url("${IMAGEM_LATERAL_URL}")`
+        : 'none'
+    );
 
     const diasSemana = [
       'Domingo','Segunda-feira','Terça-feira','Quarta-feira',
@@ -706,26 +618,19 @@
       }
     };
 
-    function formatarDDMM(data) {
-      const dia = String(data.getDate()).padStart(2, '0');
-      const mes = String(data.getMonth() + 1).padStart(2, '0');
-      return `${dia}/${mes}`;
-    }
-
     function atualizarHoje() {
       const agora = new Date();
-      const texto =
-        `${diasSemana[agora.getDay()]}, ${agora.getDate()} de ${meses[agora.getMonth()]} de ${agora.getFullYear()}`;
-
-      document.getElementById('todayDate').textContent =
-        texto.charAt(0).toUpperCase() + texto.slice(1);
-
-      document.getElementById('todayExtra').textContent = '';
       document.getElementById('ultimaAtualizacao').textContent =
         'Atualizado em ' +
         agora.toLocaleDateString('pt-BR') +
         ' · ' +
         agora.toLocaleTimeString('pt-BR');
+    }
+
+    function formatarDDMM(data) {
+      const dia = String(data.getDate()).padStart(2, '0');
+      const mes = String(data.getMonth() + 1).padStart(2, '0');
+      return `${dia}/${mes}`;
     }
 
     function parseCSVLine(line) {
@@ -798,8 +703,8 @@
 
       const palavrasEventoCidade = [
         'foz do iguacu',
-        'foz do iguaçu',
-        'foz'
+        'foz',
+        'iguacu'
       ];
 
       const pontosEvento = [
@@ -811,22 +716,15 @@
         'centro de convencoes',
         'centro de convenções',
         'centro executivo de visitantes',
-        'auditório da margem esquerda',
         'auditorio da margem esquerda',
+        'auditório da margem esquerda',
         'aeroporto de foz',
-        'aeroporto internacional de foz',
-        'aeroporto internacional cataratas',
-        'aeroporto cataratas',
-        'porto meira',
-        'vila a',
-        'centro executivo itaipu',
-        'margem esquerda'
+        'aeroporto internacional',
+        'cataratas'
       ];
 
-      const ehCidade = palavrasEventoCidade.some(p => t.includes(p));
-      const ehPontoEvento = pontosEvento.some(p => t.includes(p));
-
-      return ehCidade || ehPontoEvento;
+      return palavrasEventoCidade.some(p => t.includes(p)) ||
+             pontosEvento.some(p => t.includes(p));
     }
 
     function definirTipoAutomatico(item) {
@@ -887,9 +785,13 @@
 
       const inicioSemana = obterInicioSemanaDomingo(new Date());
       const fimSemana = obterFimSemanaSabado(new Date());
-      let totalSemana = 0;
 
-      document.getElementById('periodoSemana').textContent =
+      let totalEventosSemana = 0;
+      let totalViagensSemana = 0;
+
+      document.getElementById('periodoSemanaEventos').textContent =
+        `${formatarDDMM(inicioSemana)} - ${formatarDDMM(fimSemana)}`;
+      document.getElementById('periodoSemanaViagens').textContent =
         `${formatarDDMM(inicioSemana)} - ${formatarDDMM(fimSemana)}`;
 
       dados.forEach(item => {
@@ -900,7 +802,11 @@
 
         const dataObj = converterDataParaAnoAtual(data);
         if (dataObj && dataObj >= inicioSemana && dataObj <= fimSemana) {
-          totalSemana++;
+          if (item.tipo === 'Acompanhamento em Evento') {
+            totalEventosSemana++;
+          } else {
+            totalViagensSemana++;
+          }
         }
 
         if (!agrupados[data]) agrupados[data] = [];
@@ -928,29 +834,9 @@
       document.getElementById('turnoMesclado').textContent =
         linhasTurno.length ? [...new Set(linhasTurno)].join('\n') : '-';
 
-      document.getElementById('totalViagens').textContent = totalSemana;
+      document.getElementById('totalEventosSemana').textContent = totalEventosSemana;
+      document.getElementById('totalViagensSemana').textContent = totalViagensSemana;
       document.getElementById('totalDias').textContent = Object.keys(agrupados).length;
-
-      // Destaque de hoje: conta eventos x viagens separadamente
-      const hoje = new Date();
-      const dataHoje =
-        `${String(hoje.getDate()).padStart(2, '0')}/${String(hoje.getMonth() + 1).padStart(2, '0')}`;
-
-      const listaHoje = agrupados[dataHoje] || [];
-      const eventosHoje = listaHoje.filter(i => i.tipo === 'Acompanhamento em Evento').length;
-      const viagensHoje = listaHoje.filter(i => i.tipo === 'Viagem').length;  // [web:129][web:137]
-
-      if (!listaHoje.length) {
-        document.getElementById('hojeResumo').textContent =
-          'Nenhum evento ou viagem cadastrado para a data atual';
-      } else {
-        const partes = [];
-        if (eventosHoje) partes.push(`${eventosHoje} acompanhamento(s) em evento`);
-        if (viagensHoje) partes.push(`${viagensHoje} viagem(ns) operacional(is)`);
-
-        document.getElementById('hojeResumo').textContent =
-          partes.join(' · ');
-      }
 
       const datasOrdenadas = Object.keys(agrupados).sort((a, b) => {
         const dataA = converterDataParaAnoAtual(a);
@@ -966,9 +852,8 @@
         const primeiroTipo = agrupados[data][0]?.tipo || 'Padrão';
         const temaDia = estiloPorTipo[primeiroTipo] || estiloPorTipo.Padrão;
 
-        // contadores independentes por tipo para o rótulo "Evento X / Viagem Y"
         let contadorEvento = 0;
-        let contadorViagem = 0;  // [web:126][web:131]
+        let contadorViagem = 0;
 
         html += `
           <section class="day-container" style="--day-accent-soft: ${temaDia.diaSoft};">
@@ -1017,28 +902,28 @@
                 </div>
 
                 <div class="label-group">
-                  <div class="label-box emphasis box-seoc">
+                  <div class="label-box">
                     <div class="label">Acompanhamento SEOC/SESA</div>
                     <div class="valor ${!item.seoc ? 'muted' : ''}">
                       ${item.seoc || '-'}
                     </div>
                   </div>
 
-                  <div class="label-box emphasis box-seoe">
+                  <div class="label-box">
                     <div class="label">Acompanhamento SEOE</div>
                     <div class="valor ${!item.seoe ? 'muted' : ''}">
                       ${item.seoe || '-'}
                     </div>
                   </div>
 
-                  <div class="label-box box-evento">
+                  <div class="label-box">
                     <div class="value-pill">Evento</div>
                     <div class="valor ${!item.evento ? 'muted' : ''}">
                       ${item.evento || '-'}
                     </div>
                   </div>
 
-                  <div class="label-box box-viaturas">
+                  <div class="label-box">
                     <div class="value-pill">Viaturas</div>
                     <div class="valor ${!item.viaturas ? 'muted' : ''}">
                       ${item.viaturas || '-'}
@@ -1059,7 +944,7 @@
                   </a>
                 </div>
 
-                <div class="label-box box-obs" style="margin-top: 12px;">
+                <div class="label-box" style="margin-top: 12px;">
                   <div class="value-pill">Observações</div>
                   <div class="valor ${!item.obs ? 'muted' : ''}">
                     ${item.obs || '-'}
