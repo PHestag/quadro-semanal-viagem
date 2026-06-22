@@ -30,6 +30,14 @@
       --green-soft: rgba(34, 197, 94, 0.16);
       --violet: #8b5cf6;
       --violet-soft: rgba(139, 92, 246, 0.16);
+
+      --card-title: #ffffff;
+      --card-label: #93c5fd;
+      --card-text: #e2e8f0;
+      --card-muted: #94a3b8;
+      --card-event: #bbf7d0;
+      --card-trip: #bfdbfe;
+      --card-obs: #cbd5e1;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -380,7 +388,7 @@
     .viagem-title {
       font-size: 15px;
       font-weight: 800;
-      color: #fff;
+      color: var(--card-title);
       line-height: 1.3;
     }
 
@@ -402,6 +410,12 @@
       position: relative;
       border: 1px solid rgba(255,255,255,0.08);
       box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+      background: rgba(255,255,255,0.025);
+    }
+
+    .label-box .label {
+      color: var(--card-label);
+      margin-bottom: 6px;
     }
 
     .value-pill {
@@ -415,10 +429,31 @@
       letter-spacing: 0.08em;
       margin-bottom: 6px;
       background: rgba(255,255,255,0.06);
-      color: var(--text);
+      color: var(--card-label);
     }
 
-    .valor.muted { color: var(--faint); font-style: italic; }
+    .valor {
+      color: var(--card-text);
+    }
+
+    .valor.muted {
+      color: var(--card-muted);
+      font-style: italic;
+    }
+
+    .valor-evento {
+      color: var(--card-event);
+      font-weight: 600;
+    }
+
+    .valor-viagem {
+      color: var(--card-trip);
+      font-weight: 600;
+    }
+
+    .valor-observacao {
+      color: var(--card-obs);
+    }
 
     .maps-row {
       display: flex;
@@ -581,42 +616,17 @@
 
   <script>
     const URL_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSynGA0A1qGU6W-zmf3t14OHv0LEcPEO5aIF2aIeWAwZB5GUz8qEVUvc2GMSIhEUm5Fj61vRnBA8Jou/pub?output=csv';
-    const IMAGEM_LATERAL_URL = 'https://raw.githubusercontent.com/PHestag/quadro-semanal-viagem/refs/heads/main/bg-itaipu-dashboard.jpg';
+    const IMAGEM_LATERAL_URL = 'https://raw.githubusercontent.com/PHestag/quadro-semanal-viagem/main/bg-itaipu-dashboard.jpg';
 
     document.documentElement.style.setProperty(
       '--bg-lateral',
-      IMAGEM_LATERAL_URL && IMAGEM_LATERAL_URL !== 'https://raw.githubusercontent.com/PHestag/quadro-semanal-viagem/refs/heads/main/bg-itaipu-dashboard.jpg'
-        ? `url("${IMAGEM_LATERAL_URL}")`
-        : 'none'
+      `url("${IMAGEM_LATERAL_URL}")`
     );
 
     const diasSemana = [
       'Domingo','Segunda-feira','Terça-feira','Quarta-feira',
       'Quinta-feira','Sexta-feira','Sábado'
     ];
-
-    const meses = [
-      'janeiro','fevereiro','março','abril','maio','junho',
-      'julho','agosto','setembro','outubro','novembro','dezembro'
-    ];
-
-    const estiloPorTipo = {
-      'Acompanhamento em Evento': {
-        classe: 'accent-green',
-        diaSoft: 'rgba(75,122,90,0.10)',
-        pill: 'background: rgba(75,122,90,0.15); color: #d1dfd6; border: 1px solid rgba(75,122,90,0.24);'
-      },
-      'Viagem': {
-        classe: 'accent-blue',
-        diaSoft: 'rgba(59,130,246,0.10)',
-        pill: 'background: rgba(59,130,246,0.14); color: #c9dcff; border: 1px solid rgba(59,130,246,0.24);'
-      },
-      'Padrão': {
-        classe: 'accent-violet',
-        diaSoft: 'rgba(76,93,122,0.10)',
-        pill: 'background: rgba(76,93,122,0.16); color: #cad3e2; border: 1px solid rgba(76,93,122,0.24);'
-      }
-    };
 
     function atualizarHoje() {
       const agora = new Date();
@@ -918,14 +928,14 @@
 
                   <div class="label-box">
                     <div class="value-pill">Evento</div>
-                    <div class="valor ${!item.evento ? 'muted' : ''}">
+                    <div class="valor valor-evento ${!item.evento ? 'muted' : ''}">
                       ${item.evento || '-'}
                     </div>
                   </div>
 
                   <div class="label-box">
                     <div class="value-pill">Viaturas</div>
-                    <div class="valor ${!item.viaturas ? 'muted' : ''}">
+                    <div class="valor valor-viagem ${!item.viaturas ? 'muted' : ''}">
                       ${item.viaturas || '-'}
                     </div>
                   </div>
@@ -946,7 +956,7 @@
 
                 <div class="label-box" style="margin-top: 12px;">
                   <div class="value-pill">Observações</div>
-                  <div class="valor ${!item.obs ? 'muted' : ''}">
+                  <div class="valor valor-observacao ${!item.obs ? 'muted' : ''}">
                     ${item.obs || '-'}
                   </div>
                 </div>
