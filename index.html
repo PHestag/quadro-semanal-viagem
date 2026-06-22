@@ -23,21 +23,11 @@
       --muted: #a8b2c7;
       --faint: #7f8aa3;
       --border: rgba(148, 163, 184, 0.22);
-      --border-strong: rgba(148, 163, 184, 0.38);
       --shadow: 0 20px 50px rgba(2, 6, 23, 0.42);
       --radius-xl: 22px;
       --radius-lg: 18px;
       --radius-md: 12px;
-      --space-1: 4px;
-      --space-2: 8px;
-      --space-3: 12px;
-      --space-4: 16px;
-      --space-5: 20px;
-      --space-6: 24px;
-      --space-8: 32px;
 
-      --primary: #ef4444;
-      --primary-soft: rgba(239, 68, 68, 0.16);
       --blue: #38bdf8;
       --blue-soft: rgba(56, 189, 248, 0.14);
       --green: #22c55e;
@@ -64,15 +54,12 @@
 
     .page-frame {
       min-height: 100vh;
-      position: relative;
       padding: 24px 12px;
       display: flex;
       justify-content: center;
     }
 
     .shell {
-      position: relative;
-      z-index: 1;
       width: 100%;
       max-width: 1260px;
       background:
@@ -268,7 +255,7 @@
     .stat-card {
       position: relative;
       overflow: hidden;
-      min-height: 100px;
+      min-height: 110px;
       outline: 1px solid rgba(255,255,255,0.05);
       outline-offset: -1px;
     }
@@ -468,7 +455,6 @@
       color: var(--text);
     }
 
-    /* Cores mais sóbrias / masculinas */
     .label-box.box-seoc {
       border: 1px solid rgba(70, 116, 145, 0.48);
       background: linear-gradient(180deg, rgba(35, 65, 85, 0.28), rgba(35, 65, 85, 0.10));
@@ -500,29 +486,19 @@
     }
 
     .box-seoc .value-pill,
-    .box-seoc .label {
-      color: #b4c4e9;
-    }
+    .box-seoc .label { color: #b4c4e9; }
 
     .box-seoe .value-pill,
-    .box-seoe .label {
-      color: #b7cbbd;
-    }
+    .box-seoe .label { color: #b7cbbd; }
 
     .box-evento .value-pill,
-    .box-evento .label {
-      color: #d7b08d;
-    }
+    .box-evento .label { color: #d7b08d; }
 
     .box-viaturas .value-pill,
-    .box-viaturas .label {
-      color: #c4bfdf;
-    }
+    .box-viaturas .label { color: #c4bfdf; }
 
     .box-obs .value-pill,
-    .box-obs .label {
-      color: #d0b2bb;
-    }
+    .box-obs .label { color: #d0b2bb; }
 
     .valor.muted { color: var(--faint); font-style: italic; }
 
@@ -578,26 +554,11 @@
       opacity: 0.92;
     }
 
-    .accent-blue   { --card-accent: #3b82f6; --card-accent-soft: rgba(59, 130, 246, 0.14); }
-    .accent-green  { --card-accent: #4b7a5a; --card-accent-soft: rgba(75, 122, 90, 0.14); }
-    .accent-amber  { --card-accent: #b27a01; --card-accent-soft: rgba(178, 122, 1, 0.14); }
-    .accent-violet { --card-accent: #4c5d7a; --card-accent-soft: rgba(76, 93, 122, 0.14); }
-    .accent-rose   { --card-accent: #7a4b55; --card-accent-soft: rgba(122, 75, 85, 0.14); }
-    .accent-red    { --card-accent: #a14b4b; --card-accent-soft: rgba(161, 75, 75, 0.14); }
-
-    .card:hover,
-    .day-container:hover,
-    .stat-card:hover,
-    .field:hover {
-      border-color: rgba(255,255,255,0.24);
-      box-shadow:
-        0 22px 40px rgba(0,0,0,0.34),
-        inset 0 0 0 1px rgba(255,255,255,0.04);
-    }
-
-    @media (max-width: 1200px) {
-      .stats-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
+    .accent-blue   { --card-accent: #3b82f6; --card-accent-soft: rgba(59,130,246,0.14); }
+    .accent-green  { --card-accent: #4b7a5a; --card-accent-soft: rgba(75,122,90,0.14); }
+    .accent-amber  { --card-accent: #b27a01; --card-accent-soft: rgba(178,122,1,0.14); }
+    .accent-violet { --card-accent: #4c5d7a; --card-accent-soft: rgba(76,93,122,0.14); }
+    .accent-rose   { --card-accent: #7a4b55; --card-accent-soft: rgba(122,75,85,0.14); }
 
     @media (max-width: 900px) {
       .general-info { grid-template-columns: 1fr; }
@@ -635,8 +596,7 @@
         <div class="brand-row">
           <div class="brand-left">
             <div class="mini-logo" aria-hidden="true">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
-                   xmlns="http://www.w3.org/2000/svg">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M4 16C6.5 13.5 8.5 10.5 10 7C11.2 10.1 13.2 13.1 16 16"
                       stroke="currentColor" stroke-width="2.2"
                       stroke-linecap="round" stroke-linejoin="round" />
@@ -658,8 +618,8 @@
           <div class="title-block">
             <h1>Painel Semanal de Viagens e Apoio em Eventos</h1>
             <p>
-              Painel conectado à planilha CSV com visual reforçado, contornos mais visíveis
-              e cartões internos com cores mais sóbrias.
+              Visual destacado para a agenda operacional com grupos por dia
+              e cartões por deslocamento ou acompanhamento.
             </p>
           </div>
 
@@ -667,7 +627,7 @@
             <div class="status-label">Status de atualização</div>
             <div id="ultimaAtualizacao" class="status-value">Atualizando...</div>
             <div class="status-tagline">
-              Leitura automática do CSV publicado
+              Atualização periódica de data/hora e dos dados
             </div>
           </div>
         </div>
@@ -704,20 +664,20 @@
         <div class="stat-card" style="--accent: #3b82f6; --accent-soft: rgba(59,130,246,0.14);">
           <div class="card-kicker">Viagens na semana</div>
           <div class="stat-value" id="totalViagens">0</div>
-          <div class="stat-note">Conta apenas a semana atual, começando no domingo</div>
+          <div class="stat-note" id="periodoSemana">00/00 - 00/00</div>
         </div>
 
         <div class="stat-card" style="--accent: #4b7a5a; --accent-soft: rgba(75,122,90,0.14);">
           <div class="card-kicker">Dias com operação</div>
           <div class="stat-value" id="totalDias">0</div>
-          <div class="stat-note">Quantidade de dias com registros no quadro</div>
+          <div class="stat-note">Dias com pelo menos um card de operação</div>
         </div>
       </div>
 
       <div class="grid" id="grid"></div>
 
       <div class="footer">
-        Painel operacional ligado ao Google Sheets CSV
+        Painel semanal de apoio e deslocamentos
       </div>
     </div>
   </div>
@@ -726,13 +686,8 @@
     const URL_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSynGA0A1qGU6W-zmf3t14OHv0LEcPEO5aIF2aIeWAwZB5GUz8qEVUvc2GMSIhEUm5Fj61vRnBA8Jou/pub?output=csv';
 
     const diasSemana = [
-      'Domingo',
-      'Segunda-feira',
-      'Terça-feira',
-      'Quarta-feira',
-      'Quinta-feira',
-      'Sexta-feira',
-      'Sábado'
+      'Domingo','Segunda-feira','Terça-feira','Quarta-feira',
+      'Quinta-feira','Sexta-feira','Sábado'
     ];
 
     const meses = [
@@ -741,47 +696,28 @@
     ];
 
     const estiloPorTipo = {
-      'Institucional': {
-        classe: 'accent-blue',
-        diaSoft: 'rgba(59,130,246,0.10)',
-        pill: 'background: rgba(59,130,246,0.14); color: #c9dcff; border: 1px solid rgba(59,130,246,0.24);'
-      },
-      'Protocolo': {
-        classe: 'accent-violet',
-        diaSoft: 'rgba(76,93,122,0.10)',
-        pill: 'background: rgba(76,93,122,0.16); color: #cad3e2; border: 1px solid rgba(76,93,122,0.24);'
-      },
-      'Visita Técnica': {
+      'Acompanhamento em Evento': {
         classe: 'accent-green',
         diaSoft: 'rgba(75,122,90,0.10)',
         pill: 'background: rgba(75,122,90,0.15); color: #d1dfd6; border: 1px solid rgba(75,122,90,0.24);'
       },
-      'Educacional': {
-        classe: 'accent-amber',
-        diaSoft: 'rgba(178,122,1,0.10)',
-        pill: 'background: rgba(178,122,1,0.15); color: #ead8b2; border: 1px solid rgba(178,122,1,0.24);'
-      },
-      'Operação Especial': {
-        classe: 'accent-red',
-        diaSoft: 'rgba(161,75,75,0.10)',
-        pill: 'background: rgba(161,75,75,0.15); color: #ebcaca; border: 1px solid rgba(161,75,75,0.24);'
-      },
-      'Logística': {
+      'Viagem': {
         classe: 'accent-blue',
-        diaSoft: 'rgba(70,116,145,0.10)',
-        pill: 'background: rgba(70,116,145,0.15); color: #cddcea; border: 1px solid rgba(70,116,145,0.24);'
-      },
-      'Cerimonial': {
-        classe: 'accent-rose',
-        diaSoft: 'rgba(122,75,85,0.10)',
-        pill: 'background: rgba(122,75,85,0.15); color: #e2cfd4; border: 1px solid rgba(122,75,85,0.24);'
+        diaSoft: 'rgba(59,130,246,0.10)',
+        pill: 'background: rgba(59,130,246,0.14); color: #c9dcff; border: 1px solid rgba(59,130,246,0.24);'
       },
       'Padrão': {
-        classe: 'accent-blue',
-        diaSoft: 'rgba(59,130,246,0.08)',
-        pill: 'background: rgba(59,130,246,0.12); color: #d8e7ff; border: 1px solid rgba(59,130,246,0.22);'
+        classe: 'accent-violet',
+        diaSoft: 'rgba(76,93,122,0.10)',
+        pill: 'background: rgba(76,93,122,0.16); color: #cad3e2; border: 1px solid rgba(76,93,122,0.24);'
       }
     };
+
+    function formatarDDMM(data) {
+      const dia = String(data.getDate()).padStart(2, '0');
+      const mes = String(data.getMonth() + 1).padStart(2, '0');
+      return `${dia}/${mes}`;
+    }
 
     function atualizarHoje() {
       const agora = new Date();
@@ -792,7 +728,7 @@
         texto.charAt(0).toUpperCase() + texto.slice(1);
 
       document.getElementById('todayExtra').textContent =
-        'Contagem semanal iniciando no domingo e leitura automática da planilha publicada.';
+        'Resumo do dia baseado na quantidade de cartões de operação cadastrados.';
 
       document.getElementById('ultimaAtualizacao').textContent =
         'Atualizado em ' +
@@ -859,6 +795,55 @@
         .toUpperCase();
     }
 
+    function normalizarTexto(texto) {
+      return (texto || '')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase();
+    }
+
+    function localEhEventoEmFoz(local) {
+      const t = normalizarTexto(local);
+
+      const palavrasEventoCidade = [
+        'foz do iguacu',
+        'foz do iguaçu',
+        'foz'
+      ];
+
+      const pontosEvento = [
+        'itaipu',
+        'usina hidreletrica',
+        'usina hidrelétrica',
+        'complexo turistico itaipu',
+        'complexo turístico itaipu',
+        'centro de convencoes',
+        'centro de convenções',
+        'centro executivo de visitantes',
+        'auditório da margem esquerda',
+        'auditorio da margem esquerda',
+        'aeroporto de foz',
+        'aeroporto internacional de foz',
+        'aeroporto internacional cataratas',
+        'aeroporto cataratas',
+        'porto meira',
+        'vila a',
+        'centro executivo itaipu',
+        'margem esquerda'
+      ];
+
+      const ehCidade = palavrasEventoCidade.some(p => t.includes(p));
+      const ehPontoEvento = pontosEvento.some(p => t.includes(p));
+
+      return ehCidade || ehPontoEvento;
+    }
+
+    function definirTipoAutomatico(item) {
+      return localEhEventoEmFoz(item.local)
+        ? 'Acompanhamento em Evento'
+        : 'Viagem';
+    }
+
     function normalizarDadosCSV(textoCSV) {
       const linhas = textoCSV
         .split(/\r?\n/)
@@ -869,17 +854,22 @@
 
       const cabecalho = parseCSVLine(linhas[0]).map(normalizarCabecalho);
 
+      const encontrarIndice = (...nomes) => {
+        const nomesNorm = nomes.map(normalizarCabecalho);
+        return cabecalho.findIndex(col => nomesNorm.includes(col));
+      };
+
       const idx = {
-        data: cabecalho.indexOf('DATA'),
-        evento: cabecalho.indexOf('EVENTO'),
-        seoe: cabecalho.indexOf('SEOE'),
-        seoc: cabecalho.indexOf('SEOC/SESA'),
-        local: cabecalho.indexOf('LOCAL'),
-        obs: cabecalho.indexOf('OBSERVACAO'),
-        viaturas: cabecalho.indexOf('VIATURAS DESLOCADAS'),
-        centro: cabecalho.indexOf('CENTRO EXECUTIVO'),
-        turno: cabecalho.indexOf('TURNO'),
-        posto: cabecalho.indexOf('POSTO LOTADO')
+        data: encontrarIndice('DATA'),
+        evento: encontrarIndice('EVENTO'),
+        seoe: encontrarIndice('SEOE'),
+        seoc: encontrarIndice('SEOC/SESA', 'SEOC', 'SESA'),
+        local: encontrarIndice('LOCAL', 'DESTINO'),
+        obs: encontrarIndice('OBSERVACAO', 'OBSERVAÇÃO', 'OBS'),
+        viaturas: encontrarIndice('VIATURAS DESLOCADAS', 'VIATURAS'),
+        centro: encontrarIndice('CENTRO EXECUTIVO'),
+        turno: encontrarIndice('TURNO'),
+        posto: encontrarIndice('POSTO LOTADO')
       };
 
       return linhas.slice(1).map(linha => {
@@ -899,20 +889,6 @@
       }).filter(item => item.data);
     }
 
-    function definirTipoAutomatico(item) {
-      const texto = `${item.evento} ${item.local} ${item.obs}`.toLowerCase();
-
-      if (texto.includes('protocolo') || texto.includes('autoridade')) return 'Protocolo';
-      if (texto.includes('visita técnica') || texto.includes('visita tecnica')) return 'Visita Técnica';
-      if (texto.includes('educa')) return 'Educacional';
-      if (texto.includes('cerim') || texto.includes('cerimonial')) return 'Cerimonial';
-      if (texto.includes('logíst') || texto.includes('logist')) return 'Logística';
-      if (texto.includes('operação especial') || texto.includes('operacao especial')) return 'Operação Especial';
-      if (texto.includes('institucional')) return 'Institucional';
-
-      return 'Padrão';
-    }
-
     function renderizarPainel(dados) {
       const agrupados = {};
       let centroExecutivo = '-';
@@ -920,8 +896,10 @@
 
       const inicioSemana = obterInicioSemanaDomingo(new Date());
       const fimSemana = obterFimSemanaSabado(new Date());
+      let totalSemana = 0;
 
-      let viagensNaSemana = 0;
+      document.getElementById('periodoSemana').textContent =
+        `${formatarDDMM(inicioSemana)} - ${formatarDDMM(fimSemana)}`;
 
       dados.forEach(item => {
         const data = (item.data || '').trim();
@@ -931,7 +909,7 @@
 
         const dataObj = converterDataParaAnoAtual(data);
         if (dataObj && dataObj >= inicioSemana && dataObj <= fimSemana) {
-          viagensNaSemana++;
+          totalSemana++;
         }
 
         if (!agrupados[data]) agrupados[data] = [];
@@ -955,23 +933,22 @@
         }
       });
 
-      document.getElementById('centroExecutivoNome').textContent =
-        centroExecutivo || '-';
-
+      document.getElementById('centroExecutivoNome').textContent = centroExecutivo || '-';
       document.getElementById('turnoMesclado').textContent =
         linhasTurno.length ? [...new Set(linhasTurno)].join('\n') : '-';
 
-      document.getElementById('totalViagens').textContent = viagensNaSemana;
+      document.getElementById('totalViagens').textContent = totalSemana;
       document.getElementById('totalDias').textContent = Object.keys(agrupados).length;
 
       const hoje = new Date();
       const dataHoje =
         `${String(hoje.getDate()).padStart(2, '0')}/${String(hoje.getMonth() + 1).padStart(2, '0')}`;
 
-      const agendaHoje = agrupados[dataHoje]?.length || 0;
-      document.getElementById('hojeResumo').textContent = agendaHoje
-        ? `${agendaHoje} apoio(s) programado(s) para hoje`
-        : 'Sem operação cadastrada para a data atual';
+      const qtdeCardsHoje = agrupados[dataHoje]?.length || 0;
+      document.getElementById('hojeResumo').textContent =
+        qtdeCardsHoje > 0
+          ? `${qtdeCardsHoje} evento(s) e/ou viagem(ns) programado(s) para hoje`
+          : 'Nenhum evento ou viagem cadastrado para a data atual';
 
       const datasOrdenadas = Object.keys(agrupados).sort((a, b) => {
         const dataA = converterDataParaAnoAtual(a);
@@ -1010,18 +987,21 @@
             'https://www.google.com/maps/search/?api=1&query=' +
             encodeURIComponent(item.local || '');
 
+          const ehEvento = item.tipo === 'Acompanhamento em Evento';
+          const tituloSequencial = ehEvento ? `Evento ${index + 1}` : `Viagem ${index + 1}`;
+
           html += `
             <article class="card ${estilo.classe}">
               <div class="card-inner">
                 <div class="event-pill" style="${estilo.pill}">
-                  ${item.tipo || 'Evento'}
+                  ${item.tipo}
                 </div>
 
                 <div class="viagem-header">
                   <div class="viagem-title">
                     ${item.local || 'Destino não informado'}
                   </div>
-                  <div class="viagem-tag">Viagem ${index + 1}</div>
+                  <div class="viagem-tag">${tituloSequencial}</div>
                 </div>
 
                 <div class="label-group">
@@ -1088,7 +1068,7 @@
         <section class="day-container">
           <div class="dia">Nenhum dado encontrado</div>
           <div class="valor" style="margin-top: 8px;">
-            Verifique se a planilha publicada contém registros e se os nomes das colunas estão corretos.
+            Verifique se há registros na semana e se os cabeçalhos da planilha estão corretos.
           </div>
         </section>
       `;
@@ -1104,7 +1084,7 @@
         console.error('Erro ao carregar planilha:', erro);
         document.getElementById('grid').innerHTML = `
           <section class="day-container">
-            <div class="dia">Erro ao carregar a planilha</div>
+            <div class="dia">Erro ao carregar dados</div>
             <div class="valor" style="margin-top: 8px;">
             </div>
           </section>
@@ -1116,7 +1096,7 @@
     carregarDadosPlanilha();
 
     setInterval(atualizarHoje, 60000);
-    setInterval(carregarDadosPlanilha, 300000);
+    setInterval(carregarDadosPlanilha, 60000);
   </script>
 </body>
 </html>
