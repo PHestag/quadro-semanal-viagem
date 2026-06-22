@@ -617,18 +617,11 @@
         <div class="topbar-header">
           <div class="title-block">
             <h1>Painel Semanal de Viagens e Apoio em Eventos</h1>
-            <p>
-              Visual destacado para a agenda operacional com grupos por dia
-              e cartões por deslocamento ou acompanhamento.
-            </p>
           </div>
 
           <div class="status-block">
             <div class="status-label">Status de atualização</div>
             <div id="ultimaAtualizacao" class="status-value">Atualizando...</div>
-            <div class="status-tagline">
-              Atualização periódica de data/hora e dos dados
-            </div>
           </div>
         </div>
       </div>
@@ -727,9 +720,7 @@
       document.getElementById('todayDate').textContent =
         texto.charAt(0).toUpperCase() + texto.slice(1);
 
-      document.getElementById('todayExtra').textContent =
-        'Resumo do dia baseado na quantidade de cartões de operação cadastrados.';
-
+      document.getElementById('todayExtra').textContent = '';
       document.getElementById('ultimaAtualizacao').textContent =
         'Atualizado em ' +
         agora.toLocaleDateString('pt-BR') +
@@ -940,15 +931,26 @@
       document.getElementById('totalViagens').textContent = totalSemana;
       document.getElementById('totalDias').textContent = Object.keys(agrupados).length;
 
+      // Destaque de hoje: conta eventos x viagens separadamente
       const hoje = new Date();
       const dataHoje =
         `${String(hoje.getDate()).padStart(2, '0')}/${String(hoje.getMonth() + 1).padStart(2, '0')}`;
 
-      const qtdeCardsHoje = agrupados[dataHoje]?.length || 0;
-      document.getElementById('hojeResumo').textContent =
-        qtdeCardsHoje > 0
-          ? `${qtdeCardsHoje} evento(s) e/ou viagem(ns) programado(s) para hoje`
-          : 'Nenhum evento ou viagem cadastrado para a data atual';
+      const listaHoje = agrupados[dataHoje] || [];
+      const eventosHoje = listaHoje.filter(i => i.tipo === 'Acompanhamento em Evento').length;
+      const viagensHoje = listaHoje.filter(i => i.tipo === 'Viagem').length;  // [web:129][web:137]
+
+      if (!listaHoje.length) {
+        document.getElementById('hojeResumo').textContent =
+          'Nenhum evento ou viagem cadastrado para a data atual';
+      } else {
+        const partes = [];
+        if (eventosHoje) partes.push(`${eventosHoje} acompanhamento(s) em evento`);
+        if (viagensHoje) partes.push(`${viagensHoje} viagem(ns) operacional(is)`);
+
+        document.getElementById('hojeResumo').textContent =
+          partes.join(' · ');
+      }
 
       const datasOrdenadas = Object.keys(agrupados).sort((a, b) => {
         const dataA = converterDataParaAnoAtual(a);
@@ -963,6 +965,10 @@
         const diaSemana = dataObj ? diasSemana[dataObj.getDay()] : 'Dia não identificado';
         const primeiroTipo = agrupados[data][0]?.tipo || 'Padrão';
         const temaDia = estiloPorTipo[primeiroTipo] || estiloPorTipo.Padrão;
+
+        // contadores independentes por tipo para o rótulo "Evento X / Viagem Y"
+        let contadorEvento = 0;
+        let contadorViagem = 0;  // [web:126][web:131]
 
         html += `
           <section class="day-container" style="--day-accent-soft: ${temaDia.diaSoft};">
@@ -981,14 +987,20 @@
             <div class="viagens-row">
         `;
 
-        agrupados[data].forEach((item, index) => {
+        agrupados[data].forEach((item) => {
           const estilo = estiloPorTipo[item.tipo] || estiloPorTipo.Padrão;
           const maps =
             'https://www.google.com/maps/search/?api=1&query=' +
             encodeURIComponent(item.local || '');
 
-          const ehEvento = item.tipo === 'Acompanhamento em Evento';
-          const tituloSequencial = ehEvento ? `Evento ${index + 1}` : `Viagem ${index + 1}`;
+          let tituloSequencial;
+          if (item.tipo === 'Acompanhamento em Evento') {
+            contadorEvento += 1;
+            tituloSequencial = `Evento ${contadorEvento}`;
+          } else {
+            contadorViagem += 1;
+            tituloSequencial = `Viagem ${contadorViagem}`;
+          }
 
           html += `
             <article class="card ${estilo.classe}">
@@ -1086,6 +1098,7 @@
           <section class="day-container">
             <div class="dia">Erro ao carregar dados</div>
             <div class="valor" style="margin-top: 8px;">
+              Verifique o link publicado em CSV e tente novamente.
             </div>
           </section>
         `;
