@@ -92,7 +92,7 @@
       display: flex;
       flex-direction: column;
       gap: 16px;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     .brand-row,
@@ -101,6 +101,38 @@
       align-items: center;
       justify-content: space-between;
       gap: 16px;
+    }
+
+    .toolbar {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .toolbar select,
+    .toolbar button {
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #e5e7eb;
+      cursor: pointer;
+    }
+
+    .toolbar select {
+      border: 1px solid rgba(148,163,184,0.40);
+      background: rgba(15,23,42,0.88);
+      outline: none;
+    }
+
+    .toolbar button {
+      border: 1px solid rgba(59,130,246,0.55);
+      background: linear-gradient(135deg, #1d4ed8, #1e3a8a);
+      box-shadow: 0 10px 24px rgba(29, 78, 216, 0.22);
     }
 
     .stats-row {
@@ -198,11 +230,11 @@
     .stat-card,
     .day-container,
     .card {
-      border: 1.5px solid rgba(255, 255, 255, 0.16);
+      border: 1.5px solid rgba(255, 255, 255, 0.12);
       background: linear-gradient(180deg, rgba(17, 27, 49, 0.95), rgba(10, 19, 38, 0.95));
       box-shadow:
         0 20px 50px rgba(2, 6, 23, 0.42),
-        inset 0 0 0 1px rgba(255,255,255,0.03);
+        inset 0 0 0 1px rgba(255,255,255,0.02);
     }
 
     .general-info {
@@ -279,6 +311,12 @@
       padding: 16px;
       position: relative;
       overflow: hidden;
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+    }
+
+    .day-container:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,0.18);
     }
 
     .day-container::before {
@@ -322,7 +360,7 @@
       height: 1px;
       margin-bottom: 14px;
       border-radius: 999px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.16), transparent);
       position: relative;
       z-index: 1;
     }
@@ -350,7 +388,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(160deg, var(--card-accent-soft, rgba(56,189,248,0.10)), transparent 52%);
+      background: linear-gradient(160deg, var(--card-accent-soft, rgba(56,189,248,0.09)), transparent 52%);
       pointer-events: none;
       z-index: 0;
     }
@@ -385,7 +423,7 @@
 
     .event-pill {
       margin-bottom: 10px;
-      border-color: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.08);
     }
 
     .label-group {
@@ -409,8 +447,23 @@
       color: #ffffff !important;
     }
 
+    .value-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 9px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+      background: rgba(15,23,42,0.56);
+      border: none;
+      box-shadow: none;
+    }
+
     .box-seoc {
-      background: linear-gradient(135deg, rgba(30, 64, 175, 0.30), rgba(15, 23, 42, 0.42));
+      background: linear-gradient(135deg, rgba(30, 64, 175, 0.28), rgba(15, 23, 42, 0.42));
     }
 
     .box-seoe {
@@ -427,24 +480,6 @@
 
     .box-obs {
       background: linear-gradient(135deg, rgba(51, 65, 85, 0.72), rgba(15, 23, 42, 0.42));
-    }
-
-    .box-seoc .value-pill,
-    .box-seoe .value-pill,
-    .box-evento .value-pill,
-    .box-viaturas .value-pill,
-    .box-obs .value-pill {
-      background: rgba(255,255,255,0.08);
-      border: none;
-      box-shadow: none;
-    }
-
-    .box-seoc .label,
-    .box-seoe .label,
-    .box-evento .label,
-    .box-viaturas .label,
-    .box-obs .label {
-      opacity: 0.92;
     }
 
     .box-seoc .valor,
@@ -469,7 +504,7 @@
       padding: 10px 12px;
       border-radius: 14px;
       background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.05);
     }
 
     .maps-btn {
@@ -484,8 +519,8 @@
       text-decoration: none;
       color: #fff;
       background: linear-gradient(135deg, #1d4ed8, #1e40af);
-      border: 1px solid rgba(191, 219, 254, 0.40);
-      box-shadow: 0 12px 24px rgba(29, 78, 216, 0.24);
+      border: 1px solid rgba(191, 219, 254, 0.32);
+      box-shadow: 0 12px 24px rgba(29, 78, 216, 0.20);
     }
 
     .maps-btn-icon {
@@ -507,7 +542,85 @@
 
     .accent-blue   { --card-accent: #3b82f6; --card-accent-soft: rgba(59,130,246,0.14); }
     .accent-green  { --card-accent: #4b7a5a; --card-accent-soft: rgba(75,122,90,0.14); }
-    .accent-violet { --card-accent: #4c5d7a; --card-accent-soft: rgba(76,93,122,0.14); }
+    .accent-violet { --card-accent: #475569; --card-accent-soft: rgba(71,85,105,0.14); }
+
+    /* cores por dia da semana */
+    .dia-0 {
+      background:
+        linear-gradient(180deg, rgba(17,27,49,0.95), rgba(10,19,38,0.95)),
+        radial-gradient(circle at top left, rgba(59,130,246,0.10), transparent 58%);
+    }
+
+    .dia-1 {
+      background:
+        linear-gradient(180deg, rgba(15,23,42,0.98), rgba(10,19,38,0.98)),
+        radial-gradient(circle at top left, rgba(37,99,235,0.16), transparent 60%);
+    }
+
+    .dia-2 {
+      background:
+        linear-gradient(180deg, rgba(12,20,33,0.98), rgba(6,16,26,0.98)),
+        radial-gradient(circle at top right, rgba(30,64,175,0.18), transparent 55%);
+    }
+
+    .dia-3 {
+      background:
+        linear-gradient(180deg, rgba(15,23,36,0.98), rgba(5,13,22,0.98)),
+        radial-gradient(circle at center, rgba(6,78,59,0.16), transparent 60%);
+    }
+
+    .dia-4 {
+      background:
+        linear-gradient(180deg, rgba(20,24,35,0.98), rgba(10,16,26,0.98)),
+        radial-gradient(circle at bottom left, rgba(69,64,50,0.18), transparent 55%);
+    }
+
+    .dia-5 {
+      background:
+        linear-gradient(180deg, rgba(17,24,39,0.98), rgba(8,16,28,0.98)),
+        radial-gradient(circle at bottom right, rgba(51,65,85,0.18), transparent 55%);
+    }
+
+    .dia-6 {
+      background:
+        linear-gradient(180deg, rgba(17,27,49,0.95), rgba(10,19,38,0.95)),
+        radial-gradient(circle at top right, rgba(99,102,241,0.10), transparent 58%);
+    }
+
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 10mm;
+      }
+
+      body {
+        background: #ffffff !important;
+      }
+
+      .page-frame::before,
+      .page-frame::after,
+      .toolbar {
+        display: none !important;
+      }
+
+      .shell {
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        padding: 16px !important;
+        max-width: 100% !important;
+      }
+
+      .day-container,
+      .card {
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+
+      html, body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
 
     @media (max-width: 1200px) {
       .page-frame::before, .page-frame::after { width: 220px; }
@@ -539,12 +652,17 @@
       }
 
       .card { max-width: 100%; }
+      .toolbar { justify-content: stretch; }
+      .toolbar select,
+      .toolbar button {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
   <div class="page-frame">
-    <div class="shell">
+    <div class="shell" id="painelExportavel">
       <div class="topbar">
         <div class="brand-row">
           <div class="brand-left">
@@ -579,6 +697,21 @@
         </div>
       </div>
 
+      <div class="toolbar">
+        <select id="filtroDiaSemana">
+          <option value="todos">Todos os dias</option>
+          <option value="0">Domingo</option>
+          <option value="1">Segunda</option>
+          <option value="2">Terça</option>
+          <option value="3">Quarta</option>
+          <option value="4">Quinta</option>
+          <option value="5">Sexta</option>
+          <option value="6">Sábado</option>
+        </select>
+
+        <button id="btnExportarPDF">Baixar PDF</button>
+      </div>
+
       <div class="general-info">
         <div class="field">
           <div class="label">Centro executivo · Ramal 5128</div>
@@ -604,7 +737,7 @@
           <div class="stat-note" id="periodoSemanaViagens">00/00 - 00/00</div>
         </div>
 
-        <div class="stat-card" style="--accent: #4c5d7a; --accent-soft: rgba(76,93,122,0.14);">
+        <div class="stat-card" style="--accent: #475569; --accent-soft: rgba(71,85,105,0.14);">
           <div class="card-kicker">Dias com operação</div>
           <div class="stat-value" id="totalDias">0</div>
           <div class="stat-note">Dias com pelo menos um card</div>
@@ -618,6 +751,8 @@
       </div>
     </div>
   </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-YcsIPqYlH80RkgnDNzgFAfUB8YdOj5LSeCbTzNd5XmJq0Rz9360E3sZVSNScOc07VkID4tMOkDxbG3Ct0hZQ5A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
   <script>
     const URL_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSynGA0A1qGU6W-zmf3t14OHv0LEcPEO5aIF2aIeWAwZB5GUz8qEVUvc2GMSIhEUm5Fj61vRnBA8Jou/pub?output=csv';
@@ -681,6 +816,11 @@
       if (!dia || !mes) return null;
       const ano = new Date().getFullYear();
       return new Date(ano, mes - 1, dia, 12, 0, 0);
+    }
+
+    function diaSemanaPorDataTexto(dataTexto) {
+      const dataObj = converterDataParaAnoAtual(dataTexto);
+      return dataObj ? dataObj.getDay() : null;
     }
 
     function obterInicioSemanaDomingo(dataBase = new Date()) {
@@ -793,6 +933,22 @@
       }).filter(item => item.data);
     }
 
+    function aplicarFiltroDia() {
+      const valor = document.getElementById('filtroDiaSemana').value;
+      const blocos = document.querySelectorAll('.day-container');
+
+      blocos.forEach(bloco => {
+        const diaAttr = bloco.getAttribute('data-dia-semana');
+        if (valor === 'todos') {
+          bloco.style.display = '';
+        } else if (String(diaAttr) === String(valor)) {
+          bloco.style.display = '';
+        } else {
+          bloco.style.display = 'none';
+        }
+      });
+    }
+
     function renderizarPainel(dados) {
       const agrupados = {};
       let centroExecutivo = '-';
@@ -863,6 +1019,7 @@
 
       datasOrdenadas.forEach(data => {
         const dataObj = converterDataParaAnoAtual(data);
+        const indiceDiaSemana = diaSemanaPorDataTexto(data);
         const diaSemana = dataObj ? diasSemana[dataObj.getDay()] : 'Dia não identificado';
         const primeiroTipo = agrupados[data][0]?.tipo || 'Padrão';
         const temaDia = estiloPorTipo[primeiroTipo] || estiloPorTipo.Padrão;
@@ -871,7 +1028,9 @@
         let contadorViagem = 0;
 
         html += `
-          <section class="day-container" style="--day-accent-soft: ${temaDia.diaSoft};">
+          <section class="day-container dia-${indiceDiaSemana}"
+                   data-dia-semana="${indiceDiaSemana}"
+                   style="--day-accent-soft: ${temaDia.diaSoft};">
             <div class="day-header">
               <div>
                 <div class="day-kicker">Dia da operação</div>
@@ -984,6 +1143,8 @@
           </div>
         </section>
       `;
+
+      aplicarFiltroDia();
     }
 
     async function carregarDadosPlanilha() {
@@ -1009,19 +1170,36 @@
       'Acompanhamento em Evento': {
         classe: 'accent-green',
         diaSoft: 'rgba(75,122,90,0.10)',
-        pill: 'background: rgba(75,122,90,0.15); color: #d1dfd6; border: 1px solid rgba(75,122,90,0.24);'
+        pill: 'background: rgba(75,122,90,0.15); color: #d1dfd6; border: 1px solid rgba(75,122,90,0.18);'
       },
       'Viagem': {
         classe: 'accent-blue',
         diaSoft: 'rgba(59,130,246,0.10)',
-        pill: 'background: rgba(59,130,246,0.14); color: #c9dcff; border: 1px solid rgba(59,130,246,0.24);'
+        pill: 'background: rgba(59,130,246,0.14); color: #c9dcff; border: 1px solid rgba(59,130,246,0.18);'
       },
       'Padrão': {
         classe: 'accent-violet',
-        diaSoft: 'rgba(76,93,122,0.10)',
-        pill: 'background: rgba(76,93,122,0.16); color: #cad3e2; border: 1px solid rgba(76,93,122,0.24);'
+        diaSoft: 'rgba(71,85,105,0.10)',
+        pill: 'background: rgba(71,85,105,0.16); color: #cad3e2; border: 1px solid rgba(71,85,105,0.18);'
       }
     };
+
+    document.getElementById('filtroDiaSemana').addEventListener('change', aplicarFiltroDia);
+
+    document.getElementById('btnExportarPDF').addEventListener('click', () => {
+      const painel = document.getElementById('painelExportavel');
+
+      const opt = {
+        margin: 8,
+        filename: 'painel-semanal-viagens.pdf',
+        image: { type: 'jpeg', quality: 0.96 },
+        html2canvas: { scale: 2, useCORS: true, scrollY: 0 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+      };
+
+      html2pdf().set(opt).from(painel).save();
+    });
 
     atualizarHoje();
     carregarDadosPlanilha();
