@@ -30,14 +30,6 @@
       --green-soft: rgba(34, 197, 94, 0.16);
       --violet: #8b5cf6;
       --violet-soft: rgba(139, 92, 246, 0.16);
-
-      --card-title: #ffffff;
-      --card-label: #93c5fd;
-      --card-text: #e2e8f0;
-      --card-muted: #94a3b8;
-      --card-event: #bbf7d0;
-      --card-trip: #bfdbfe;
-      --card-obs: #cbd5e1;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -387,7 +379,7 @@
     .viagem-title {
       font-size: 15px;
       font-weight: 800;
-      color: var(--card-title);
+      color: #ffffff;
       line-height: 1.3;
     }
 
@@ -407,51 +399,64 @@
       border-radius: 14px;
       padding: 10px;
       position: relative;
-      border: 1px solid rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.10);
       box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
-      background: rgba(255,255,255,0.025);
     }
 
-    .label-box .label {
-      color: var(--card-label);
-      margin-bottom: 6px;
+    .label-box .label,
+    .label-box .valor,
+    .label-box .value-pill {
+      color: #ffffff !important;
     }
 
-    .value-pill {
-      display: inline-flex;
-      align-items: center;
-      padding: 4px 9px;
-      border-radius: 999px;
-      font-size: 10px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 6px;
-      background: rgba(255,255,255,0.06);
-      color: var(--card-label);
+    .box-seoc {
+      background: linear-gradient(135deg, rgba(59,130,246,0.22), rgba(37,99,235,0.10));
     }
 
-    .valor {
-      color: var(--card-text);
+    .box-seoe {
+      background: linear-gradient(135deg, rgba(139,92,246,0.22), rgba(91,33,182,0.10));
+    }
+
+    .box-evento {
+      background: linear-gradient(135deg, rgba(34,197,94,0.22), rgba(21,128,61,0.10));
+    }
+
+    .box-viaturas {
+      background: linear-gradient(135deg, rgba(245,158,11,0.22), rgba(180,83,9,0.10));
+    }
+
+    .box-obs {
+      background: linear-gradient(135deg, rgba(244,63,94,0.20), rgba(190,24,93,0.10));
+    }
+
+    .box-seoc .value-pill,
+    .box-seoe .value-pill,
+    .box-evento .value-pill,
+    .box-viaturas .value-pill,
+    .box-obs .value-pill {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .box-seoc .label,
+    .box-seoe .label,
+    .box-evento .label,
+    .box-viaturas .label,
+    .box-obs .label {
+      opacity: 0.92;
+    }
+
+    .box-seoc .valor,
+    .box-seoe .valor,
+    .box-evento .valor,
+    .box-viaturas .valor,
+    .box-obs .valor {
+      font-weight: 600;
     }
 
     .valor.muted {
-      color: var(--card-muted);
+      color: rgba(255,255,255,0.75) !important;
       font-style: italic;
-    }
-
-    .valor-evento {
-      color: var(--card-event);
-      font-weight: 600;
-    }
-
-    .valor-viagem {
-      color: var(--card-trip);
-      font-weight: 600;
-    }
-
-    .valor-observacao {
-      color: var(--card-obs);
     }
 
     .maps-row {
@@ -911,30 +916,30 @@
                 </div>
 
                 <div class="label-group">
-                  <div class="label-box">
+                  <div class="label-box box-seoc">
                     <div class="label">Acompanhamento SEOC/SESA</div>
                     <div class="valor ${!item.seoc ? 'muted' : ''}">
                       ${item.seoc || '-'}
                     </div>
                   </div>
 
-                  <div class="label-box">
+                  <div class="label-box box-seoe">
                     <div class="label">Acompanhamento SEOE</div>
                     <div class="valor ${!item.seoe ? 'muted' : ''}">
                       ${item.seoe || '-'}
                     </div>
                   </div>
 
-                  <div class="label-box">
+                  <div class="label-box box-evento">
                     <div class="value-pill">Evento</div>
-                    <div class="valor valor-evento ${!item.evento ? 'muted' : ''}">
+                    <div class="valor ${!item.evento ? 'muted' : ''}">
                       ${item.evento || '-'}
                     </div>
                   </div>
 
-                  <div class="label-box">
+                  <div class="label-box box-viaturas">
                     <div class="value-pill">Viaturas</div>
-                    <div class="valor valor-viagem ${!item.viaturas ? 'muted' : ''}">
+                    <div class="valor ${!item.viaturas ? 'muted' : ''}">
                       ${item.viaturas || '-'}
                     </div>
                   </div>
@@ -953,9 +958,9 @@
                   </a>
                 </div>
 
-                <div class="label-box" style="margin-top: 12px;">
+                <div class="label-box box-obs" style="margin-top: 12px;">
                   <div class="value-pill">Observações</div>
-                  <div class="valor valor-observacao ${!item.obs ? 'muted' : ''}">
+                  <div class="valor ${!item.obs ? 'muted' : ''}">
                     ${item.obs || '-'}
                   </div>
                 </div>
