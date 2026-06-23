@@ -228,7 +228,6 @@
 
     .general-info .field,
     .stat-card,
-    .day-container,
     .card {
       border: 1.5px solid rgba(255, 255, 255, 0.12);
       background: linear-gradient(180deg, rgba(17, 27, 49, 0.95), rgba(10, 19, 38, 0.95));
@@ -311,6 +310,10 @@
       padding: 16px;
       position: relative;
       overflow: hidden;
+      border: 1.5px solid rgba(255, 255, 255, 0.12);
+      box-shadow:
+        0 20px 50px rgba(2, 6, 23, 0.42),
+        inset 0 0 0 1px rgba(255,255,255,0.02);
       transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
     }
 
@@ -323,7 +326,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(90deg, var(--day-accent-soft, rgba(56,189,248,0.07)), transparent 35%);
+      background: linear-gradient(90deg, var(--day-accent-soft, rgba(56,189,248,0.05)), transparent 35%);
       pointer-events: none;
     }
 
@@ -463,23 +466,23 @@
     }
 
     .box-seoc {
-      background: linear-gradient(135deg, rgba(30, 64, 175, 0.28), rgba(15, 23, 42, 0.42));
+      background: linear-gradient(135deg, rgba(30, 64, 175, 0.18), rgba(15, 23, 42, 0.42));
     }
 
     .box-seoe {
-      background: linear-gradient(135deg, rgba(30, 41, 59, 0.72), rgba(15, 23, 42, 0.42));
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.28), rgba(15, 23, 42, 0.42));
     }
 
     .box-evento {
-      background: linear-gradient(135deg, rgba(6, 78, 59, 0.34), rgba(15, 23, 42, 0.42));
+      background: linear-gradient(135deg, rgba(6, 78, 59, 0.28), rgba(15, 23, 42, 0.42));
     }
 
     .box-viaturas {
-      background: linear-gradient(135deg, rgba(68, 64, 60, 0.62), rgba(28, 25, 23, 0.42));
+      background: linear-gradient(135deg, rgba(68, 64, 60, 0.38), rgba(28, 25, 23, 0.42));
     }
 
     .box-obs {
-      background: linear-gradient(135deg, rgba(51, 65, 85, 0.72), rgba(15, 23, 42, 0.42));
+      background: linear-gradient(135deg, rgba(51, 65, 85, 0.42), rgba(15, 23, 42, 0.42));
     }
 
     .box-seoc .valor,
@@ -540,51 +543,37 @@
       opacity: 0.92;
     }
 
-    .accent-blue   { --card-accent: #3b82f6; --card-accent-soft: rgba(59,130,246,0.14); }
-    .accent-green  { --card-accent: #4b7a5a; --card-accent-soft: rgba(75,122,90,0.14); }
-    .accent-violet { --card-accent: #475569; --card-accent-soft: rgba(71,85,105,0.14); }
+    .accent-blue   { --card-accent: #3b82f6; --card-accent-soft: rgba(59,130,246,0.09); }
+    .accent-green  { --card-accent: #4b7a5a; --card-accent-soft: rgba(75,122,90,0.09); }
+    .accent-violet { --card-accent: #475569; --card-accent-soft: rgba(71,85,105,0.09); }
 
-    /* cores por dia da semana */
-    .dia-0 {
-      background:
-        linear-gradient(180deg, rgba(17,27,49,0.95), rgba(10,19,38,0.95)),
-        radial-gradient(circle at top left, rgba(59,130,246,0.10), transparent 58%);
+    /* --- CORES DISCRETAS POR DIA (apenas um “tint” diferente) --- */
+    .dia-0 { /* Domingo */
+      --day-accent-soft: rgba(59,130,246,0.06);
     }
 
-    .dia-1 {
-      background:
-        linear-gradient(180deg, rgba(15,23,42,0.98), rgba(10,19,38,0.98)),
-        radial-gradient(circle at top left, rgba(37,99,235,0.16), transparent 60%);
+    .dia-1 { /* Segunda */
+      --day-accent-soft: rgba(37,99,235,0.07);
     }
 
-    .dia-2 {
-      background:
-        linear-gradient(180deg, rgba(12,20,33,0.98), rgba(6,16,26,0.98)),
-        radial-gradient(circle at top right, rgba(30,64,175,0.18), transparent 55%);
+    .dia-2 { /* Terça */
+      --day-accent-soft: rgba(56,189,248,0.08);
     }
 
-    .dia-3 {
-      background:
-        linear-gradient(180deg, rgba(15,23,36,0.98), rgba(5,13,22,0.98)),
-        radial-gradient(circle at center, rgba(6,78,59,0.16), transparent 60%);
+    .dia-3 { /* Quarta */
+      --day-accent-soft: rgba(34,197,94,0.08);
     }
 
-    .dia-4 {
-      background:
-        linear-gradient(180deg, rgba(20,24,35,0.98), rgba(10,16,26,0.98)),
-        radial-gradient(circle at bottom left, rgba(69,64,50,0.18), transparent 55%);
+    .dia-4 { /* Quinta */
+      --day-accent-soft: rgba(245,158,11,0.08);
     }
 
-    .dia-5 {
-      background:
-        linear-gradient(180deg, rgba(17,24,39,0.98), rgba(8,16,28,0.98)),
-        radial-gradient(circle at bottom right, rgba(51,65,85,0.18), transparent 55%);
+    .dia-5 { /* Sexta */
+      --day-accent-soft: rgba(139,92,246,0.08);
     }
 
-    .dia-6 {
-      background:
-        linear-gradient(180deg, rgba(17,27,49,0.95), rgba(10,19,38,0.95)),
-        radial-gradient(circle at top right, rgba(99,102,241,0.10), transparent 58%);
+    .dia-6 { /* Sábado */
+      --day-accent-soft: rgba(244,63,94,0.08);
     }
 
     @media print {
@@ -752,7 +741,8 @@
     </div>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-YcsIPqYlH80RkgnDNzgFAfUB8YdOj5LSeCbTzNd5XmJq0Rz9360E3sZVSNScOc07VkID4tMOkDxbG3Ct0hZQ5A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- html2pdf.js sem integrity, para não ser bloqueado -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <script>
     const URL_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSynGA0A1qGU6W-zmf3t14OHv0LEcPEO5aIF2aIeWAwZB5GUz8qEVUvc2GMSIhEUm5Fj61vRnBA8Jou/pub?output=csv';
@@ -948,6 +938,24 @@
         }
       });
     }
+
+    const estiloPorTipo = {
+      'Acompanhamento em Evento': {
+        classe: 'accent-green',
+        diaSoft: 'rgba(75,122,90,0.05)',
+        pill: 'background: rgba(75,122,90,0.15); color: #d1dfd6; border: 1px solid rgba(75,122,90,0.18);'
+      },
+      'Viagem': {
+        classe: 'accent-blue',
+        diaSoft: 'rgba(59,130,246,0.05)',
+        pill: 'background: rgba(59,130,246,0.14); color: #c9dcff; border: 1px solid rgba(59,130,246,0.18);'
+      },
+      'Padrão': {
+        classe: 'accent-violet',
+        diaSoft: 'rgba(71,85,105,0.05)',
+        pill: 'background: rgba(71,85,105,0.16); color: #cad3e2; border: 1px solid rgba(71,85,105,0.18);'
+      }
+    };
 
     function renderizarPainel(dados) {
       const agrupados = {};
@@ -1166,39 +1174,26 @@
       }
     }
 
-    const estiloPorTipo = {
-      'Acompanhamento em Evento': {
-        classe: 'accent-green',
-        diaSoft: 'rgba(75,122,90,0.10)',
-        pill: 'background: rgba(75,122,90,0.15); color: #d1dfd6; border: 1px solid rgba(75,122,90,0.18);'
-      },
-      'Viagem': {
-        classe: 'accent-blue',
-        diaSoft: 'rgba(59,130,246,0.10)',
-        pill: 'background: rgba(59,130,246,0.14); color: #c9dcff; border: 1px solid rgba(59,130,246,0.18);'
-      },
-      'Padrão': {
-        classe: 'accent-violet',
-        diaSoft: 'rgba(71,85,105,0.10)',
-        pill: 'background: rgba(71,85,105,0.16); color: #cad3e2; border: 1px solid rgba(71,85,105,0.18);'
-      }
-    };
-
     document.getElementById('filtroDiaSemana').addEventListener('change', aplicarFiltroDia);
 
-    document.getElementById('btnExportarPDF').addEventListener('click', () => {
-      const painel = document.getElementById('painelExportavel');
+    document.getElementById('btnExportarPDF').addEventListener('click', async () => {
+      try {
+        const painel = document.getElementById('painelExportavel');
 
-      const opt = {
-        margin: 8,
-        filename: 'painel-semanal-viagens.pdf',
-        image: { type: 'jpeg', quality: 0.96 },
-        html2canvas: { scale: 2, useCORS: true, scrollY: 0 },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
-      };
+        const opt = {
+          margin: 8,
+          filename: 'painel-semanal-viagens.pdf',
+          image: { type: 'jpeg', quality: 0.96 },
+          html2canvas: { scale: 2, useCORS: true, scrollY: 0 },
+          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+          pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+        };
 
-      html2pdf().set(opt).from(painel).save();
+        await window.html2pdf().set(opt).from(painel).save();
+      } catch (erro) {
+        console.error('Erro ao gerar PDF:', erro);
+        alert('Erro ao gerar PDF. Veja o console (F12).');
+      }
     });
 
     atualizarHoje();
