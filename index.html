@@ -111,8 +111,8 @@
       flex-wrap: wrap;
     }
 
-    .toolbar select,
-    .toolbar button {
+    .toolbar select {
+      min-width: 180px;
       padding: 8px 12px;
       border-radius: 999px;
       font-size: 11px;
@@ -120,19 +120,10 @@
       text-transform: uppercase;
       letter-spacing: 0.06em;
       color: #e5e7eb;
-      cursor: pointer;
-    }
-
-    .toolbar select {
       border: 1px solid rgba(148,163,184,0.40);
       background: rgba(15,23,42,0.88);
       outline: none;
-    }
-
-    .toolbar button {
-      border: 1px solid rgba(59,130,246,0.55);
-      background: linear-gradient(135deg, #1d4ed8, #1e3a8a);
-      box-shadow: 0 10px 24px rgba(29, 78, 216, 0.22);
+      cursor: pointer;
     }
 
     .stats-row {
@@ -315,6 +306,8 @@
         0 20px 50px rgba(2, 6, 23, 0.42),
         inset 0 0 0 1px rgba(255,255,255,0.02);
       transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+      background:
+        linear-gradient(180deg, rgba(14, 23, 41, 0.96), rgba(9, 17, 33, 0.96));
     }
 
     .day-container:hover {
@@ -326,7 +319,8 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(90deg, var(--day-accent-soft, rgba(56,189,248,0.05)), transparent 35%);
+      background:
+        linear-gradient(90deg, var(--day-accent-soft, rgba(56,189,248,0.05)), transparent 35%);
       pointer-events: none;
     }
 
@@ -547,69 +541,14 @@
     .accent-green  { --card-accent: #4b7a5a; --card-accent-soft: rgba(75,122,90,0.09); }
     .accent-violet { --card-accent: #475569; --card-accent-soft: rgba(71,85,105,0.09); }
 
-    /* --- CORES DISCRETAS POR DIA (apenas um “tint” diferente) --- */
-    .dia-0 { /* Domingo */
-      --day-accent-soft: rgba(59,130,246,0.06);
-    }
-
-    .dia-1 { /* Segunda */
-      --day-accent-soft: rgba(37,99,235,0.07);
-    }
-
-    .dia-2 { /* Terça */
-      --day-accent-soft: rgba(56,189,248,0.08);
-    }
-
-    .dia-3 { /* Quarta */
-      --day-accent-soft: rgba(34,197,94,0.08);
-    }
-
-    .dia-4 { /* Quinta */
-      --day-accent-soft: rgba(245,158,11,0.08);
-    }
-
-    .dia-5 { /* Sexta */
-      --day-accent-soft: rgba(139,92,246,0.08);
-    }
-
-    .dia-6 { /* Sábado */
-      --day-accent-soft: rgba(244,63,94,0.08);
-    }
-
-    @media print {
-      @page {
-        size: A4 portrait;
-        margin: 10mm;
-      }
-
-      body {
-        background: #ffffff !important;
-      }
-
-      .page-frame::before,
-      .page-frame::after,
-      .toolbar {
-        display: none !important;
-      }
-
-      .shell {
-        box-shadow: none !important;
-        border-radius: 0 !important;
-        padding: 16px !important;
-        max-width: 100% !important;
-      }
-
-      .day-container,
-      .card {
-        page-break-inside: avoid;
-        break-inside: avoid;
-      }
-
-      html, body {
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-      }
-    }
+    /* diferenciação suave por dia */
+    .dia-0 { --day-accent-soft: rgba(59,130,246,0.06); }
+    .dia-1 { --day-accent-soft: rgba(37,99,235,0.07); }
+    .dia-2 { --day-accent-soft: rgba(56,189,248,0.08); }
+    .dia-3 { --day-accent-soft: rgba(34,197,94,0.08); }
+    .dia-4 { --day-accent-soft: rgba(245,158,11,0.08); }
+    .dia-5 { --day-accent-soft: rgba(139,92,246,0.08); }
+    .dia-6 { --day-accent-soft: rgba(244,63,94,0.08); }
 
     @media (max-width: 1200px) {
       .page-frame::before, .page-frame::after { width: 220px; }
@@ -642,16 +581,13 @@
 
       .card { max-width: 100%; }
       .toolbar { justify-content: stretch; }
-      .toolbar select,
-      .toolbar button {
-        width: 100%;
-      }
+      .toolbar select { width: 100%; }
     }
   </style>
 </head>
 <body>
   <div class="page-frame">
-    <div class="shell" id="painelExportavel">
+    <div class="shell">
       <div class="topbar">
         <div class="brand-row">
           <div class="brand-left">
@@ -697,8 +633,6 @@
           <option value="5">Sexta</option>
           <option value="6">Sábado</option>
         </select>
-
-        <button id="btnExportarPDF">Baixar PDF</button>
       </div>
 
       <div class="general-info">
@@ -740,9 +674,6 @@
       </div>
     </div>
   </div>
-
-  <!-- html2pdf.js sem integrity, para não ser bloqueado -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <script>
     const URL_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSynGA0A1qGU6W-zmf3t14OHv0LEcPEO5aIF2aIeWAwZB5GUz8qEVUvc2GMSIhEUm5Fj61vRnBA8Jou/pub?output=csv';
@@ -942,17 +873,14 @@
     const estiloPorTipo = {
       'Acompanhamento em Evento': {
         classe: 'accent-green',
-        diaSoft: 'rgba(75,122,90,0.05)',
         pill: 'background: rgba(75,122,90,0.15); color: #d1dfd6; border: 1px solid rgba(75,122,90,0.18);'
       },
       'Viagem': {
         classe: 'accent-blue',
-        diaSoft: 'rgba(59,130,246,0.05)',
         pill: 'background: rgba(59,130,246,0.14); color: #c9dcff; border: 1px solid rgba(59,130,246,0.18);'
       },
       'Padrão': {
         classe: 'accent-violet',
-        diaSoft: 'rgba(71,85,105,0.05)',
         pill: 'background: rgba(71,85,105,0.16); color: #cad3e2; border: 1px solid rgba(71,85,105,0.18);'
       }
     };
@@ -1029,16 +957,13 @@
         const dataObj = converterDataParaAnoAtual(data);
         const indiceDiaSemana = diaSemanaPorDataTexto(data);
         const diaSemana = dataObj ? diasSemana[dataObj.getDay()] : 'Dia não identificado';
-        const primeiroTipo = agrupados[data][0]?.tipo || 'Padrão';
-        const temaDia = estiloPorTipo[primeiroTipo] || estiloPorTipo.Padrão;
 
         let contadorEvento = 0;
         let contadorViagem = 0;
 
         html += `
           <section class="day-container dia-${indiceDiaSemana}"
-                   data-dia-semana="${indiceDiaSemana}"
-                   style="--day-accent-soft: ${temaDia.diaSoft};">
+                   data-dia-semana="${indiceDiaSemana}">
             <div class="day-header">
               <div>
                 <div class="day-kicker">Dia da operação</div>
@@ -1175,26 +1100,6 @@
     }
 
     document.getElementById('filtroDiaSemana').addEventListener('change', aplicarFiltroDia);
-
-    document.getElementById('btnExportarPDF').addEventListener('click', async () => {
-      try {
-        const painel = document.getElementById('painelExportavel');
-
-        const opt = {
-          margin: 8,
-          filename: 'painel-semanal-viagens.pdf',
-          image: { type: 'jpeg', quality: 0.96 },
-          html2canvas: { scale: 2, useCORS: true, scrollY: 0 },
-          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-          pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
-        };
-
-        await window.html2pdf().set(opt).from(painel).save();
-      } catch (erro) {
-        console.error('Erro ao gerar PDF:', erro);
-        alert('Erro ao gerar PDF. Veja o console (F12).');
-      }
-    });
 
     atualizarHoje();
     carregarDadosPlanilha();
