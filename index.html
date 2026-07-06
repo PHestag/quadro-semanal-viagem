@@ -541,6 +541,7 @@
     .accent-green  { --card-accent: #4b7a5a; --card-accent-soft: rgba(75,122,90,0.09); }
     .accent-violet { --card-accent: #475569; --card-accent-soft: rgba(71,85,105,0.09); }
 
+    /* diferenciação suave por dia */
     .dia-0 { --day-accent-soft: rgba(59,130,246,0.06); }
     .dia-1 { --day-accent-soft: rgba(37,99,235,0.07); }
     .dia-2 { --day-accent-soft: rgba(56,189,248,0.08); }
@@ -808,20 +809,13 @@
         : 'Viagem';
     }
 
-    // CORREÇÃO: agora essa função retorna registros + centro executivo + turnos
     function normalizarDadosCSV(textoCSV) {
       const linhas = textoCSV
         .split(/\r?\n/)
         .map(l => l.trim())
         .filter(Boolean);
 
-      if (!linhas.length) {
-        return {
-          registros: [],
-          centroExecutivo: '-',
-          turnosInfo: []
-        };
-      }
+      if (!linhas.length) return [];
 
       const cabecalho = parseCSVLine(linhas[0]).map(normalizarCabecalho);
 
@@ -843,7 +837,7 @@
         posto: encontrarIndice('POSTO LOTADO')
       };
 
-      const todosOsItens = linhas.slice(1).map(linha => {
+      return linhas.slice(1).map(linha => {
         const colunas = parseCSVLine(linha);
         return {
           data: colunas[idx.data] || '',
@@ -857,26 +851,7 @@
           turno: colunas[idx.turno] || '',
           posto: colunas[idx.posto] || ''
         };
-      });
-
-      const linhaComCentro = todosOsItens.find(item => item.centro && item.centro.trim());
-      const centroExecutivo = linhaComCentro ? linhaComCentro.centro.trim() : '-';
-
-      const turnosInfo = [
-        ...new Set(
-          todosOsItens
-            .filter(item => item.turno && item.turno.trim())
-            .map(item => item.posto ? `${item.turno} · ${item.posto}` : item.turno)
-        )
-      ];
-
-      const registros = todosOsItens.filter(item => item.data && item.data.trim());
-
-      return {
-        registros,
-        centroExecutivo,
-        turnosInfo
-      };
+      }).filter(item => item.data);
     }
 
     function aplicarFiltroDia() {
@@ -910,12 +885,10 @@
       }
     };
 
-    // CORREÇÃO: renderizarPainel recebe o objeto com registros + centro executivo + turnos
-    function renderizarPainel(payload) {
-      const dados = payload.registros || [];
+    function renderizarPainel(dados) {
       const agrupados = {};
-      const centroExecutivo = payload.centroExecutivo || '-';
-      const linhasTurno = payload.turnosInfo || [];
+      let centroExecutivo = '-';
+      const linhasTurno = [];
 
       const inicioSemana = obterInicioSemanaDomingo(new Date());
       const fimSemana = obterFimSemanaSabado(new Date());
@@ -954,11 +927,19 @@
           obs: item.obs,
           tipo: item.tipo
         });
+
+        if (item.centro && centroExecutivo === '-') {
+          centroExecutivo = item.centro;
+        }
+
+        if (item.turno) {
+          linhasTurno.push(item.posto ? `${item.turno} · ${item.posto}` : item.turno);
+        }
       });
 
       document.getElementById('centroExecutivoNome').textContent = centroExecutivo || '-';
       document.getElementById('turnoMesclado').textContent =
-        linhasTurno.length ? linhasTurno.join('\n') : '-';
+        linhasTurno.length ? [...new Set(linhasTurno)].join('\n') : '-';
 
       document.getElementById('totalEventosSemana').textContent = totalEventosSemana;
       document.getElementById('totalViagensSemana').textContent = totalViagensSemana;
@@ -1090,7 +1071,8 @@
       document.getElementById('grid').innerHTML = html || `
         <section class="day-container">
           <div class="dia">Nenhuma viagem ou evento informado encontrado</div>
-          <div class="valor" style="margin-top: 8px;"></div>
+          <div class="valor" style="margin-top: 8px;">
+          </div>
         </section>
       `;
 
@@ -1105,12 +1087,11 @@
         renderizarPainel(dados);
       } catch (erro) {
         console.error('Erro ao carregar planilha:', erro);
-        document.getElementById('centroExecutivoNome').textContent = '-';
-        document.getElementById('turnoMesclado').textContent = '-';
         document.getElementById('grid').innerHTML = `
           <section class="day-container">
             <div class="dia">Erro ao carregar dados</div>
-            <div class="valor" style="margin-top: 8px;"></div>
+            <div class="valor" style="margin-top: 8px;">
+            </div>
           </section>
         `;
       }
