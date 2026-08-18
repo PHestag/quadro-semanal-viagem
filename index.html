@@ -623,8 +623,8 @@
 
       <div class="toolbar">
         <select id="filtroVisualizacao">
-          <option value="semana">Semana atual</option>
-          <option value="passadas">Viagens passadas</option>
+          <option value="agenda">Agenda / Próximas viagens</option>
+          <option value="realizadas">Viagens realizadas</option>
         </select>
 
         <select id="filtroDiaSemana">
@@ -681,6 +681,14 @@
 
   <script>
     const URL_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSynGA0A1qGU6W-zmf3t14OHv0LEcPEO5aIF2aIeWAwZB5GUz8qEVUvc2GMSIhEUm5Fj61vRnBA8Jou/pub?output=csv';
+
+    // Segunda aba da mesma planilha.
+    // O Google permite selecionar uma aba pelo nome em endpoints de consulta.
+    const NOME_ABA_REALIZADAS = 'VIAGEM JÁ REALIZADAS';
+    const URL_CSV_REALIZADAS =
+      'https://docs.google.com/spreadsheets/d/e/2PACX-1vSynGA0A1qGU6W-zmf3t14OHv0LEcPEO5aIF2aIeWAwZB5GUz8qEVUvc2GMSIhEUm5Fj61vRnBA8Jou/pub?output=csv&sheet=' +
+      encodeURIComponent(NOME_ABA_REALIZADAS);
+
     const IMAGEM_LATERAL_URL = 'https://raw.githubusercontent.com/PHestag/quadro-semanal-viagem/main/bg-itaipu-dashboard.jpg';
 
     document.documentElement.style.setProperty(
@@ -939,39 +947,41 @@
     }
 
     function aplicarFiltros() {
-      const filtroVisualizacao = document.getElementById('filtroVisualizacao').value;
+      const modo = document.getElementById('filtroVisualizacao').value;
       const filtroDia = document.getElementById('filtroDiaSemana').value;
       const blocos = document.querySelectorAll('.day-container');
+      const filtroDiaEl = document.getElementById('filtroDiaSemana');
 
       const hoje = new Date();
       hoje.setHours(0, 0, 0, 0);
 
-      const inicioSemana = obterInicioSemanaDomingo(hoje);
-      const fimSemana = obterFimSemanaSabado(hoje);
+      // Na aba de viagens realizadas, todos os registros da segunda aba
+      // são mostrados. Na agenda, ficam visíveis hoje e as próximas semanas.
+      const realizadas = modo === 'realizadas';
+
+      filtroDiaEl.disabled = realizadas;
 
       blocos.forEach(bloco => {
         const dataTexto = bloco.getAttribute('data-data');
         const diaAttr = bloco.getAttribute('data-dia-semana');
         const dataBloco = converterDataParaAnoAtual(dataTexto);
 
-        let mostrar = true;
+        let mostrar;
 
-        if (filtroVisualizacao === 'passadas') {
-          // Somente ontem e datas anteriores.
-          mostrar = dataBloco && dataBloco < hoje;
+        if (realizadas) {
+          mostrar = true;
         } else {
-          // Aba principal: somente a semana atual.
-          mostrar = dataBloco && dataBloco >= inicioSemana && dataBloco <= fimSemana;
+          // Agenda: hoje para frente, incluindo todas as próximas semanas.
+          mostrar = dataBloco && dataBloco >= hoje;
         }
 
-        if (mostrar && filtroDia !== 'todos') {
+        if (mostrar && !realizadas && filtroDia !== 'todos') {
           mostrar = String(diaAttr) === String(filtroDia);
         }
 
         bloco.style.display = mostrar ? '' : 'none';
       });
 
-      // Mensagem quando não houver registros no filtro escolhido.
       const grid = document.getElementById('grid');
       const mensagemExistente = document.getElementById('mensagemFiltroVazio');
       if (mensagemExistente) mensagemExistente.remove();
@@ -984,12 +994,34 @@
         mensagem.className = 'day-container';
         mensagem.innerHTML = `
           <div class="dia">
-            ${filtroVisualizacao === 'passadas'
-              ? 'Nenhuma viagem ou evento anterior encontrado.'
-              : 'Nenhuma viagem ou evento na semana atual.'}
+            ${realizadas
+              ? 'Nenhuma viagem realizada encontrada.'
+              : 'Nenhuma viagem futura encontrada.'}
           </div>
         `;
         grid.appendChild(mensagem);
+      }
+
+      // Atualiza os indicadores do topo conforme a aba selecionada.
+      const kickerEventos = document.querySelector('#totalEventosSemana')?.parentElement?.querySelector('.card-kicker');
+      const kickerViagens = document.querySelector('#totalViagensSemana')?.parentElement?.querySelector('.card-kicker');
+      const noteEventos = document.getElementById('periodoSemanaEventos');
+      const noteViagens = document.getElementById('periodoSemanaViagens');
+
+      if (realizadas) {
+        if (kickerEventos) kickerEventos.textContent = 'Total de viagens realizadas';
+        if (kickerViagens) kickerViagens.textContent = 'Registros realizados';
+        if (noteEventos) noteEventos.textContent = `${window.totalRealizadas || 0} viagem(ns)`;
+        if (noteViagens) noteViagens.textContent = 'Aba: VIAGEM JÁ REALIZADAS';
+        document.getElementById('totalEventosSemana').textContent = window.totalRealizadas || 0;
+        document.getElementById('totalViagensSemana').textContent = window.totalRealizadas || 0;
+      } else {
+        if (kickerEventos) kickerEventos.textContent = 'Eventos na agenda';
+        if (kickerViagens) kickerViagens.textContent = 'Viagens na agenda';
+        if (noteEventos) noteEventos.textContent = `${window.periodoAgenda || ''}`;
+        if (noteViagens) noteViagens.textContent = `${window.periodoAgenda || ''}`;
+        document.getElementById('totalEventosSemana').textContent = window.totalEventosAgenda || 0;
+        document.getElementById('totalViagensSemana').textContent = window.totalViagensAgenda || 0;
       }
     }
 
@@ -1019,6 +1051,7 @@
       const agrupados = {};
       const centroExecutivo = payload.centroExecutivo || '-';
       const linhasTurno = payload.turnosInfo || [];
+      const modo = payload.modo || 'agenda';
 
       const inicioSemana = obterInicioSemanaDomingo(new Date());
       const fimSemana = obterFimSemanaSabado(new Date());
@@ -1026,10 +1059,12 @@
       let totalEventosSemana = 0;
       let totalViagensSemana = 0;
 
-      document.getElementById('periodoSemanaEventos').textContent =
-        `${formatarDDMM(inicioSemana)} - ${formatarDDMM(fimSemana)}`;
-      document.getElementById('periodoSemanaViagens').textContent =
-        `${formatarDDMM(inicioSemana)} - ${formatarDDMM(fimSemana)}`;
+      const hoje = new Date();
+      hoje.setHours(0, 0, 0, 0);
+
+      const periodoAgenda = `${formatarDDMM(hoje)} em diante`;
+      window.periodoAgenda = periodoAgenda;
+      window.totalRealizadas = modo === 'realizadas' ? dados.length : 0;
 
       dados.forEach(item => {
         const data = (item.data || '').trim();
@@ -1038,11 +1073,15 @@
         item.tipo = definirTipoAutomatico(item);
 
         const dataObj = converterDataParaAnoAtual(data);
-        if (dataObj && dataObj >= inicioSemana && dataObj <= fimSemana) {
-          if (item.tipo === 'Acompanhamento em Evento') {
-            totalEventosSemana++;
-          } else {
-            totalViagensSemana++;
+
+        if (modo === 'agenda') {
+          // A agenda contabiliza os registros de hoje em diante.
+          if (dataObj && dataObj >= hoje) {
+            if (item.tipo === 'Acompanhamento em Evento') {
+              totalEventosSemana++;
+            } else {
+              totalViagensSemana++;
+            }
           }
         }
 
@@ -1063,10 +1102,14 @@
       document.getElementById('turnoMesclado').textContent =
         linhasTurno.length ? linhasTurno.join('\n') : '-';
 
-      document.getElementById('totalEventosSemana').textContent = totalEventosSemana;
-      document.getElementById('totalViagensSemana').textContent = totalViagensSemana;
-      // O total exibido continua sendo referente aos dados carregados;
-      // a visualização é controlada pelas abas.
+      window.totalEventosAgenda = totalEventosSemana;
+      window.totalViagensAgenda = totalViagensSemana;
+
+      document.getElementById('totalEventosSemana').textContent =
+        modo === 'realizadas' ? dados.length : totalEventosSemana;
+      document.getElementById('totalViagensSemana').textContent =
+        modo === 'realizadas' ? dados.length : totalViagensSemana;
+
       document.getElementById('totalDias').textContent = Object.keys(agrupados).length;
 
       const datasOrdenadas = Object.keys(agrupados).sort((a, b) => {
@@ -1208,33 +1251,60 @@
       aplicarFiltros();
     }
 
-    async function carregarDadosPlanilha() {
+    async function buscarCSV(url) {
+      const resposta = await fetch(url, { cache: 'no-store' });
+      if (!resposta.ok) throw new Error(`HTTP ${resposta.status}`);
+      const texto = await resposta.text();
+      if (!texto || texto.includes('<!DOCTYPE html>') || texto.includes('<html')) {
+        throw new Error('O Google não retornou CSV válido para esta aba.');
+      }
+      return texto;
+    }
+
+    async function carregarDadosPlanilha(modo = null) {
       try {
-        const resposta = await fetch(URL_CSV);
-        const texto = await resposta.text();
+        const modoAtual = modo || document.getElementById('filtroVisualizacao').value;
+
+        const url = modoAtual === 'realizadas'
+          ? URL_CSV_REALIZADAS
+          : URL_CSV;
+
+        const texto = await buscarCSV(url);
         const dados = normalizarDadosCSV(texto);
-        renderizarPainel(dados);
+
+        renderizarPainel({
+          ...dados,
+          modo: modoAtual
+        });
       } catch (erro) {
         console.error('Erro ao carregar planilha:', erro);
+
         document.getElementById('centroExecutivoNome').textContent = '-';
         document.getElementById('turnoMesclado').textContent = '-';
         document.getElementById('grid').innerHTML = `
           <section class="day-container">
             <div class="dia">Erro ao carregar dados</div>
-            <div class="valor" style="margin-top: 8px;"></div>
+            <div class="valor" style="margin-top: 8px;">
+              ${erro.message || 'Não foi possível acessar a planilha.'}
+            </div>
           </section>
         `;
       }
     }
 
-    document.getElementById('filtroVisualizacao').addEventListener('change', aplicarFiltros);
+    document.getElementById('filtroVisualizacao').addEventListener('change', () => {
+      carregarDadosPlanilha(document.getElementById('filtroVisualizacao').value);
+    });
+
     document.getElementById('filtroDiaSemana').addEventListener('change', aplicarFiltros);
 
     atualizarHoje();
-    carregarDadosPlanilha();
+    carregarDadosPlanilha('agenda');
 
     setInterval(atualizarHoje, 60000);
-    setInterval(carregarDadosPlanilha, 60000);
+    setInterval(() => {
+      carregarDadosPlanilha(document.getElementById('filtroVisualizacao').value);
+    }, 60000);
   </script>
 </body>
 </html>
