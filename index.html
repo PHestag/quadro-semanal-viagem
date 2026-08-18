@@ -685,9 +685,15 @@
     // Aba 'VIAGENS JÁ REALIZADAS' da mesma planilha (a aba da direita).
     // O Google permite selecionar uma aba pelo nome em endpoints de consulta.
     const NOME_ABA_REALIZADAS = 'VIAGENS JÁ REALIZADAS';
-    const URL_CSV_REALIZADAS =
-      'https://docs.google.com/spreadsheets/d/e/2PACX-1vSynGA0A1qGU6W-zmf3t14OHv0LEcPEO5aIF2aIeWAwZB5GUz8qEVUvc2GMSIhEUm5Fj61vRnBA8Jou/gviz/tq?tqx=out:csv&sheet=' +
-      encodeURIComponent(NOME_ABA_REALIZADAS);
+    const BASE_PUBLICADA = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSynGA0A1qGU6W-zmf3t14OHv0LEcPEO5aIF2aIeWAwZB5GUz8qEVUvc2GMSIhEUm5Fj61vRnBA8Jou/';
+
+    // A segunda aba tem colunas diferentes da QUADRO SEMANAL.
+    // Tentamos primeiro o endpoint de publicação CSV e, se necessário,
+    // o endpoint GViz, sempre apontando explicitamente para a aba correta.
+    const URLS_CSV_REALIZADAS = [
+      BASE_PUBLICADA + 'pub?output=csv&sheet=' + encodeURIComponent(NOME_ABA_REALIZADAS),
+      BASE_PUBLICADA + 'gviz/tq?tqx=out:csv&sheet=' + encodeURIComponent(NOME_ABA_REALIZADAS)
+    ];
 
     const IMAGEM_LATERAL_URL = 'https://raw.githubusercontent.com/PHestag/quadro-semanal-viagem/main/bg-itaipu-dashboard.jpg';
 
@@ -901,6 +907,7 @@
         data: encontrarIndice('DATA'),
         evento: encontrarIndice('EVENTO'),
         seoe: encontrarIndice('SEOE'),
+        // Na aba VIAGENS JÁ REALIZADAS a coluna é exatamente SEOC/SESA.
         seoc: encontrarIndice('SEOC/SESA', 'SEOC', 'SESA'),
         local: encontrarIndice('LOCAL', 'DESTINO'),
         obs: encontrarIndice('OBSERVACAO', 'OBSERVAÇÃO', 'OBS'),
@@ -1261,15 +1268,37 @@
       return texto;
     }
 
+    async function buscarCSVRealizadas() {
+      let ultimoErro = null;
+
+      for (const url of URLS_CSV_REALIZADAS) {
+        try {
+          const texto = await buscarCSV(url);
+          const linhas = texto.split(/\r?\n/).filter(l => l.trim());
+          if (!linhas.length) continue;
+
+          const cabecalho = parseCSVLine(linhas[0]).map(normalizarCabecalho);
+          const obrigatorias = ['DATA', 'EVENTO', 'SEOE', 'SEOC/SESA', 'LOCAL', 'OBSERVACAO', 'VIATURAS DESLOCADAS'];
+          const faltando = obrigatorias.filter(col => !cabecalho.includes(col));
+
+          if (!faltando.length) return texto;
+          ultimoErro = new Error('A aba retornada não possui as colunas esperadas: ' + faltando.join(', '));
+        } catch (erro) {
+          ultimoErro = erro;
+        }
+      }
+
+      throw ultimoErro || new Error('Não foi possível carregar a aba VIAGENS JÁ REALIZADAS.');
+    }
+
     async function carregarDadosPlanilha(modo = null) {
       try {
         const modoAtual = modo || document.getElementById('filtroVisualizacao').value;
 
-        const url = modoAtual === 'realizadas'
-          ? URL_CSV_REALIZADAS
-          : URL_CSV;
+        const texto = modoAtual === 'realizadas'
+          ? await buscarCSVRealizadas()
+          : await buscarCSV(URL_CSV);
 
-        const texto = await buscarCSV(url);
         const dados = normalizarDadosCSV(texto);
 
         renderizarPainel({
@@ -1285,7 +1314,8 @@
           <section class="day-container">
             <div class="dia">Erro ao carregar dados</div>
             <div class="valor" style="margin-top: 8px;">
-              ${erro.message || 'Não foi possível acessar a planilha.'}
+              ${erro.message || 'Não foi possível acessar a planilha.'}<br><br>
+              <small>Verifique se a aba <strong>VIAGENS JÁ REALIZADAS</strong> está publicada e contém as colunas: DATA, EVENTO, SEOE, SEOC/SESA, LOCAL, OBSERVAÇÃO e VIATURAS DESLOCADAS.</small>
             </div>
           </section>
         `;
