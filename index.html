@@ -682,11 +682,11 @@
   <script>
     const URL_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSynGA0A1qGU6W-zmf3t14OHv0LEcPEO5aIF2aIeWAwZB5GUz8qEVUvc2GMSIhEUm5Fj61vRnBA8Jou/pub?output=csv';
 
-    // Segunda aba da mesma planilha.
+    // Aba 'VIAGENS JÁ REALIZADAS' da mesma planilha (a aba da direita).
     // O Google permite selecionar uma aba pelo nome em endpoints de consulta.
-    const NOME_ABA_REALIZADAS = 'VIAGEM JÁ REALIZADAS';
+    const NOME_ABA_REALIZADAS = 'VIAGENS JÁ REALIZADAS';
     const URL_CSV_REALIZADAS =
-      'https://docs.google.com/spreadsheets/d/e/2PACX-1vSynGA0A1qGU6W-zmf3t14OHv0LEcPEO5aIF2aIeWAwZB5GUz8qEVUvc2GMSIhEUm5Fj61vRnBA8Jou/pub?output=csv&sheet=' +
+      'https://docs.google.com/spreadsheets/d/e/2PACX-1vSynGA0A1qGU6W-zmf3t14OHv0LEcPEO5aIF2aIeWAwZB5GUz8qEVUvc2GMSIhEUm5Fj61vRnBA8Jou/gviz/tq?tqx=out:csv&sheet=' +
       encodeURIComponent(NOME_ABA_REALIZADAS);
 
     const IMAGEM_LATERAL_URL = 'https://raw.githubusercontent.com/PHestag/quadro-semanal-viagem/main/bg-itaipu-dashboard.jpg';
@@ -1012,7 +1012,7 @@
         if (kickerEventos) kickerEventos.textContent = 'Total de viagens realizadas';
         if (kickerViagens) kickerViagens.textContent = 'Registros realizados';
         if (noteEventos) noteEventos.textContent = `${window.totalRealizadas || 0} viagem(ns)`;
-        if (noteViagens) noteViagens.textContent = 'Aba: VIAGEM JÁ REALIZADAS';
+        if (noteViagens) noteViagens.textContent = 'Aba: VIAGENS JÁ REALIZADAS';
         document.getElementById('totalEventosSemana').textContent = window.totalRealizadas || 0;
         document.getElementById('totalViagensSemana').textContent = window.totalRealizadas || 0;
       } else {
