@@ -32,11 +32,19 @@
       --violet-soft: rgba(139, 92, 246, 0.16);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { min-height: 100%; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+    }
 
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: "Inter", sans-serif;
       color: var(--text);
       background:
         radial-gradient(circle at top left, rgba(56, 189, 248, 0.10), transparent 28%),
@@ -70,8 +78,14 @@
       opacity: 0.82;
     }
 
-    .page-frame::before { left: 0; }
-    .page-frame::after { right: 0; transform: scaleX(-1); }
+    .page-frame::before {
+      left: 0;
+    }
+
+    .page-frame::after {
+      right: 0;
+      transform: scaleX(-1);
+    }
 
     .shell {
       position: relative;
@@ -79,12 +93,12 @@
       width: 100%;
       max-width: 1260px;
       background:
-        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015)),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.015)),
         linear-gradient(135deg, rgba(8, 17, 34, 0.96), rgba(11, 23, 48, 0.94));
-      border: 1px solid rgba(255,255,255,0.08);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 28px;
       padding: 24px;
-      box-shadow: 0 28px 80px rgba(0,0,0,0.52);
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.52);
       backdrop-filter: blur(10px);
     }
 
@@ -120,8 +134,8 @@
       text-transform: uppercase;
       letter-spacing: 0.06em;
       color: #e5e7eb;
-      border: 1px solid rgba(148,163,184,0.40);
-      background: rgba(15,23,42,0.88);
+      border: 1px solid rgba(148, 163, 184, 0.40);
+      background: rgba(15, 23, 42, 0.88);
       outline: none;
       cursor: pointer;
     }
@@ -179,8 +193,8 @@
       letter-spacing: 0.06em;
       text-transform: uppercase;
       padding: 6px 12px;
-      border: 1px solid rgba(255,255,255,0.10);
-      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      background: rgba(255, 255, 255, 0.04);
       color: var(--text);
       white-space: nowrap;
     }
@@ -224,7 +238,7 @@
       background: linear-gradient(180deg, rgba(17, 27, 49, 0.95), rgba(10, 19, 38, 0.95));
       box-shadow:
         0 20px 50px rgba(2, 6, 23, 0.42),
-        inset 0 0 0 1px rgba(255,255,255,0.02);
+        inset 0 0 0 1px rgba(255, 255, 255, 0.02);
     }
 
     .general-info {
@@ -270,7 +284,7 @@
       bottom: -28px;
       width: 120px;
       height: 120px;
-      background: radial-gradient(circle, var(--accent-soft, rgba(56,189,248,0.16)), transparent 65%);
+      background: radial-gradient(circle, var(--accent-soft, rgba(56, 189, 248, 0.16)), transparent 65%);
       pointer-events: none;
     }
 
@@ -304,23 +318,21 @@
       border: 1.5px solid rgba(255, 255, 255, 0.12);
       box-shadow:
         0 20px 50px rgba(2, 6, 23, 0.42),
-        inset 0 0 0 1px rgba(255,255,255,0.02);
-      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
-      background:
-        linear-gradient(180deg, rgba(14, 23, 41, 0.96), rgba(9, 17, 33, 0.96));
+        inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+      transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+      background: linear-gradient(180deg, rgba(14, 23, 41, 0.96), rgba(9, 17, 33, 0.96));
     }
 
     .day-container:hover {
       transform: translateY(-1px);
-      border-color: rgba(255,255,255,0.18);
+      border-color: rgba(255, 255, 255, 0.18);
     }
 
     .day-container::before {
       content: "";
       position: absolute;
       inset: 0;
-      background:
-        linear-gradient(90deg, var(--day-accent-soft, rgba(56,189,248,0.05)), transparent 35%);
+      background: linear-gradient(90deg, var(--day-accent-soft, rgba(56, 189, 248, 0.05)), transparent 35%);
       pointer-events: none;
     }
 
@@ -357,7 +369,7 @@
       height: 1px;
       margin-bottom: 14px;
       border-radius: 999px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.16), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.16), transparent);
       position: relative;
       z-index: 1;
     }
@@ -385,7 +397,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(160deg, var(--card-accent-soft, rgba(56,189,248,0.09)), transparent 52%);
+      background: linear-gradient(160deg, var(--card-accent-soft, rgba(56, 189, 248, 0.09)), transparent 52%);
       pointer-events: none;
       z-index: 0;
     }
@@ -401,7 +413,10 @@
       z-index: 1;
     }
 
-    .card-inner { position: relative; z-index: 2; }
+    .card-inner {
+      position: relative;
+      z-index: 2;
+    }
 
     .viagem-header {
       display: flex;
@@ -420,7 +435,7 @@
 
     .event-pill {
       margin-bottom: 10px;
-      border-color: rgba(255,255,255,0.08);
+      border-color: rgba(255, 255, 255, 0.08);
     }
 
     .label-group {
@@ -454,7 +469,7 @@
       text-transform: uppercase;
       letter-spacing: 0.08em;
       margin-bottom: 6px;
-      background: rgba(15,23,42,0.56);
+      background: rgba(15, 23, 42, 0.56);
       border: none;
       box-shadow: none;
     }
@@ -488,7 +503,7 @@
     }
 
     .valor.muted {
-      color: rgba(255,255,255,0.75) !important;
+      color: rgba(255, 255, 255, 0.75) !important;
       font-style: italic;
     }
 
@@ -500,8 +515,8 @@
       margin-top: 12px;
       padding: 10px 12px;
       border-radius: 14px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.05);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     .maps-btn {
@@ -527,7 +542,7 @@
       align-items: center;
       justify-content: center;
       border-radius: 999px;
-      background: rgba(255,255,255,0.14);
+      background: rgba(255, 255, 255, 0.14);
       font-size: 10px;
     }
 
@@ -537,53 +552,107 @@
       opacity: 0.92;
     }
 
-    .accent-blue   { --card-accent: #3b82f6; --card-accent-soft: rgba(59,130,246,0.09); }
-    .accent-green  { --card-accent: #4b7a5a; --card-accent-soft: rgba(75,122,90,0.09); }
-    .accent-violet { --card-accent: #475569; --card-accent-soft: rgba(71,85,105,0.09); }
+    .accent-blue {
+      --card-accent: #3b82f6;
+      --card-accent-soft: rgba(59, 130, 246, 0.09);
+    }
 
-    .dia-0 { --day-accent-soft: rgba(59,130,246,0.06); }
-    .dia-1 { --day-accent-soft: rgba(37,99,235,0.07); }
-    .dia-2 { --day-accent-soft: rgba(56,189,248,0.08); }
-    .dia-3 { --day-accent-soft: rgba(34,197,94,0.08); }
-    .dia-4 { --day-accent-soft: rgba(245,158,11,0.08); }
-    .dia-5 { --day-accent-soft: rgba(139,92,246,0.08); }
-    .dia-6 { --day-accent-soft: rgba(244,63,94,0.08); }
+    .accent-green {
+      --card-accent: #4b7a5a;
+      --card-accent-soft: rgba(75, 122, 90, 0.09);
+    }
+
+    .accent-violet {
+      --card-accent: #475569;
+      --card-accent-soft: rgba(71, 85, 105, 0.09);
+    }
+
+    .dia-0 {
+      --day-accent-soft: rgba(59, 130, 246, 0.06);
+    }
+
+    .dia-1 {
+      --day-accent-soft: rgba(37, 99, 235, 0.07);
+    }
+
+    .dia-2 {
+      --day-accent-soft: rgba(56, 189, 248, 0.08);
+    }
+
+    .dia-3 {
+      --day-accent-soft: rgba(34, 197, 94, 0.08);
+    }
+
+    .dia-4 {
+      --day-accent-soft: rgba(245, 158, 11, 0.08);
+    }
+
+    .dia-5 {
+      --day-accent-soft: rgba(139, 92, 246, 0.08);
+    }
+
+    .dia-6 {
+      --day-accent-soft: rgba(244, 63, 94, 0.08);
+    }
 
     @media (max-width: 1200px) {
-      .page-frame::before, .page-frame::after { width: 220px; }
+      .page-frame::before,
+      .page-frame::after {
+        width: 220px;
+      }
     }
 
     @media (max-width: 900px) {
-      .page-frame::before, .page-frame::after { display: none; }
-      .general-info { grid-template-columns: 1fr; }
-      .stats-row { grid-template-columns: 1fr; }
+      .page-frame::before,
+      .page-frame::after {
+        display: none;
+      }
+
+      .general-info,
+      .stats-row {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (max-width: 768px) {
-      .page-frame { padding: 12px; }
-      .shell { padding: 16px; border-radius: 22px; }
+      .page-frame {
+        padding: 12px;
+      }
 
-      .brand-row, .topbar-header {
+      .shell {
+        padding: 16px;
+        border-radius: 22px;
+      }
+
+      .brand-row,
+      .topbar-header,
+      .maps-row,
+      .viagem-header {
         flex-direction: column;
         align-items: flex-start;
       }
 
-      .status-block, .data {
+      .status-block,
+      .data {
         align-items: flex-start;
         text-align: left;
       }
 
-      .maps-row, .viagem-header {
-        flex-direction: column;
-        align-items: flex-start;
+      .card {
+        max-width: 100%;
       }
 
-      .card { max-width: 100%; }
-      .toolbar { justify-content: stretch; }
-      .toolbar select { width: 100%; }
+      .toolbar {
+        justify-content: stretch;
+      }
+
+      .toolbar select {
+        width: 100%;
+      }
     }
   </style>
 </head>
+
 <body>
   <div class="page-frame">
     <div class="shell">
@@ -591,13 +660,20 @@
         <div class="brand-row">
           <div class="brand-left">
             <div class="mini-logo" aria-hidden="true">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M4 16C6.5 13.5 8.5 10.5 10 7C11.2 10.1 13.2 13.1 16 16"
-                      stroke="currentColor" stroke-width="2.2"
-                      stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M16.5 8.5L20 5"
-                      stroke="currentColor" stroke-width="2.2"
-                      stroke-linecap="round" />
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M4 16C6.5 13.5 8.5 10.5 10 7C11.2 10.1 13.2 13.1 16 16"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M16.5 8.5L20 5"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                />
               </svg>
             </div>
             <div class="brand-title">Painel operacional semanal</div>
@@ -675,37 +751,56 @@
   </div>
 
   <script>
-    const URL_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSynGA0A1qGU6W-zmf3t14OHv0LEcPEO5aIF2aIeWAwZB5GUz8qEVUvc2GMSIhEUm5Fj61vRnBA8Jou/pub?output=csv';
-    const IMAGEM_LATERAL_URL = 'https://raw.githubusercontent.com/PHestag/quadro-semanal-viagem/main/bg-itaipu-dashboard.jpg';
+    const URL_CSV =
+      "https://docs.google.com/spreadsheets/d/e/2PACX-1vSynGA0A1qGU6W-zmf3t14OHv0LEcPEO5aIF2aIeWAwZB5GUz8qEVUvc2GMSIhEUm5Fj61vRnBA8Jou/pub?output=csv";
+
+    const IMAGEM_LATERAL_URL =
+      "https://raw.githubusercontent.com/PHestag/quadro-semanal-viagem/main/bg-itaipu-dashboard.jpg";
 
     document.documentElement.style.setProperty(
-      '--bg-lateral',
+      "--bg-lateral",
       `url("${IMAGEM_LATERAL_URL}")`
     );
 
     const diasSemana = [
-      'Domingo','Segunda-feira','Terça-feira','Quarta-feira',
-      'Quinta-feira','Sexta-feira','Sábado'
+      "Domingo",
+      "Segunda-feira",
+      "Terça-feira",
+      "Quarta-feira",
+      "Quinta-feira",
+      "Sexta-feira",
+      "Sábado"
     ];
 
     function atualizarHoje() {
       const agora = new Date();
-      document.getElementById('ultimaAtualizacao').textContent =
-        'Atualizado em ' +
-        agora.toLocaleDateString('pt-BR') +
-        ' · ' +
-        agora.toLocaleTimeString('pt-BR');
+
+      document.getElementById("ultimaAtualizacao").textContent =
+        "Atualizado em " +
+        agora.toLocaleDateString("pt-BR") +
+        " · " +
+        agora.toLocaleTimeString("pt-BR");
     }
 
     function formatarDDMM(data) {
-      const dia = String(data.getDate()).padStart(2, '0');
-      const mes = String(data.getMonth() + 1).padStart(2, '0');
+      const dia = String(data.getDate()).padStart(2, "0");
+      const mes = String(data.getMonth() + 1).padStart(2, "0");
+
       return `${dia}/${mes}`;
+    }
+
+    function escapeHTML(valor) {
+      return String(valor ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
     }
 
     function parseCSVLine(line) {
       const result = [];
-      let current = '';
+      let current = "";
       let inQuotes = false;
 
       for (let i = 0; i < line.length; i++) {
@@ -719,44 +814,50 @@
           } else {
             inQuotes = !inQuotes;
           }
-        } else if (char === ',' && !inQuotes) {
+        } else if (char === "," && !inQuotes) {
           result.push(current);
-          current = '';
+          current = "";
         } else {
           current += char;
         }
       }
 
       result.push(current);
-      return result.map(v => v.trim());
+
+      return result.map((valor) => valor.trim());
     }
 
-    // Converte a data da planilha sem depender do formato automático do navegador.
-    // Aceita DD/MM, DD/MM/AAAA, DD-MM-AAAA e AAAA-MM-DD.
-    // O horário é fixado em 12:00 para evitar mudanças de dia por fuso horário.
     function converterDataParaAnoAtual(dataTexto) {
-      const texto = String(dataTexto || '').trim();
-      if (!texto) return null;
+      const textoOriginal = String(dataTexto || "").trim();
 
-      let dia, mes, ano;
+      if (!textoOriginal) return null;
+
+      const texto = textoOriginal
+        .replace(/\s+\d{1,2}:\d{2}(?::\d{2})?.*$/, "")
+        .replace(/T\d{1,2}:\d{2}(?::\d{2})?.*$/, "")
+        .trim();
+
+      let dia;
+      let mes;
+      let ano;
       let match;
 
-      // DD/MM/AAAA ou DD-MM-AAAA
-      match = texto.match(/^(\\d{1,2})[\\/\\-](\\d{1,2})[\\/\\-](\\d{4})$/);
+      match = texto.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
+
       if (match) {
         dia = Number(match[1]);
         mes = Number(match[2]);
         ano = Number(match[3]);
       } else {
-        // AAAA-MM-DD ou AAAA/MM/DD
-        match = texto.match(/^(\\d{4})[\\/\\-](\\d{1,2})[\\/\\-](\\d{1,2})$/);
+        match = texto.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})$/);
+
         if (match) {
           ano = Number(match[1]);
           mes = Number(match[2]);
           dia = Number(match[3]);
         } else {
-          // DD/MM sem ano: usa o ano atual
-          match = texto.match(/^(\\d{1,2})[\\/]\\s*(\\d{1,2})$/);
+          match = texto.match(/^(\d{1,2})\/(\d{1,2})$/);
+
           if (match) {
             dia = Number(match[1]);
             mes = Number(match[2]);
@@ -767,20 +868,8 @@
         }
       }
 
-      if (
-        !Number.isInteger(dia) ||
-        !Number.isInteger(mes) ||
-        !Number.isInteger(ano) ||
-        mes < 1 || mes > 12 ||
-        dia < 1 || dia > 31
-      ) {
-        return null;
-      }
-
       const data = new Date(ano, mes - 1, dia, 12, 0, 0, 0);
 
-      // Impede datas inválidas, como 31/02, de serem transformadas
-      // automaticamente pelo JavaScript em outro dia.
       if (
         data.getFullYear() !== ano ||
         data.getMonth() !== mes - 1 ||
@@ -794,36 +883,41 @@
 
     function diaSemanaPorDataTexto(dataTexto) {
       const dataObj = converterDataParaAnoAtual(dataTexto);
+
       return dataObj ? dataObj.getDay() : null;
     }
 
     function obterInicioSemanaDomingo(dataBase = new Date()) {
       const data = new Date(dataBase);
+
       data.setHours(0, 0, 0, 0);
       data.setDate(data.getDate() - data.getDay());
+
       return data;
     }
 
     function obterFimSemanaSabado(dataBase = new Date()) {
       const inicio = obterInicioSemanaDomingo(dataBase);
       const fim = new Date(inicio);
+
       fim.setDate(inicio.getDate() + 6);
       fim.setHours(23, 59, 59, 999);
+
       return fim;
     }
 
     function normalizarCabecalho(texto) {
-      return (texto || '')
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
+      return String(texto || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
         .trim()
         .toUpperCase();
     }
 
     function normalizarTexto(texto) {
-      return (texto || '')
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
+      return String(texto || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
         .toLowerCase();
     }
 
@@ -831,48 +925,45 @@
       const t = normalizarTexto(local);
 
       const palavrasEventoCidade = [
-        'foz do iguacu',
-        'foz',
-        'iguacu'
+        "foz do iguacu",
+        "foz",
+        "iguacu"
       ];
 
       const pontosEvento = [
-        'itaipu',
-        'usina hidreletrica',
-        'usina hidrelétrica',
-        'complexo turistico itaipu',
-        'complexo turístico itaipu',
-        'centro de convencoes',
-        'centro de convenções',
-        'centro executivo de visitantes',
-        'auditorio da margem esquerda',
-        'auditório da margem esquerda',
-        'aeroporto de foz',
-        'aeroporto internacional',
-        'cataratas'
+        "itaipu",
+        "usina hidreletrica",
+        "complexo turistico itaipu",
+        "centro de convencoes",
+        "centro executivo de visitantes",
+        "auditorio da margem esquerda",
+        "aeroporto de foz",
+        "aeroporto internacional",
+        "cataratas"
       ];
 
-      return palavrasEventoCidade.some(p => t.includes(p)) ||
-             pontosEvento.some(p => t.includes(p));
+      return (
+        palavrasEventoCidade.some((palavra) => t.includes(palavra)) ||
+        pontosEvento.some((ponto) => t.includes(ponto))
+      );
     }
 
     function definirTipoAutomatico(item) {
       return localEhEventoEmFoz(item.local)
-        ? 'Acompanhamento em Evento'
-        : 'Viagem';
+        ? "Acompanhamento em Evento"
+        : "Viagem";
     }
 
-    // CORREÇÃO: agora essa função retorna registros + centro executivo + turnos
     function normalizarDadosCSV(textoCSV) {
       const linhas = textoCSV
         .split(/\r?\n/)
-        .map(l => l.trim())
+        .map((linha) => linha.trim())
         .filter(Boolean);
 
       if (!linhas.length) {
         return {
           registros: [],
-          centroExecutivo: '-',
+          centroExecutivo: "-",
           turnosInfo: []
         };
       }
@@ -880,51 +971,70 @@
       const cabecalho = parseCSVLine(linhas[0]).map(normalizarCabecalho);
 
       const encontrarIndice = (...nomes) => {
-        const nomesNorm = nomes.map(normalizarCabecalho);
-        return cabecalho.findIndex(col => nomesNorm.includes(col));
+        const nomesNormalizados = nomes.map(normalizarCabecalho);
+
+        return cabecalho.findIndex((coluna) =>
+          nomesNormalizados.includes(coluna)
+        );
       };
 
       const idx = {
-        data: encontrarIndice('DATA'),
-        evento: encontrarIndice('EVENTO'),
-        seoe: encontrarIndice('SEOE'),
-        seoc: encontrarIndice('SEOC/SESA', 'SEOC', 'SESA'),
-        local: encontrarIndice('LOCAL', 'DESTINO'),
-        obs: encontrarIndice('OBSERVACAO', 'OBSERVAÇÃO', 'OBS'),
-        viaturas: encontrarIndice('VIATURAS DESLOCADAS', 'VIATURAS'),
-        centro: encontrarIndice('CENTRO EXECUTIVO'),
-        turno: encontrarIndice('TURNO'),
-        posto: encontrarIndice('POSTO LOTADO')
+        data: encontrarIndice("DATA"),
+        evento: encontrarIndice("EVENTO"),
+        seoe: encontrarIndice("SEOE"),
+        seoc: encontrarIndice("SEOC/SESA", "SEOC", "SESA"),
+        local: encontrarIndice("LOCAL", "DESTINO"),
+        obs: encontrarIndice("OBSERVACAO", "OBSERVAÇÃO", "OBS"),
+        viaturas: encontrarIndice("VIATURAS DESLOCADAS", "VIATURAS"),
+        centro: encontrarIndice("CENTRO EXECUTIVO"),
+        turno: encontrarIndice("TURNO"),
+        posto: encontrarIndice("POSTO LOTADO")
       };
 
-      const todosOsItens = linhas.slice(1).map(linha => {
+      const obterColuna = (colunas, indice) => {
+        return indice >= 0 ? String(colunas[indice] || "").trim() : "";
+      };
+
+      const todosOsItens = linhas.slice(1).map((linha) => {
         const colunas = parseCSVLine(linha);
+
         return {
-          data: colunas[idx.data] || '',
-          evento: colunas[idx.evento] || '',
-          seoe: colunas[idx.seoe] || '',
-          seoc: colunas[idx.seoc] || '',
-          local: colunas[idx.local] || '',
-          obs: colunas[idx.obs] || '',
-          viaturas: colunas[idx.viaturas] || '',
-          centro: colunas[idx.centro] || '',
-          turno: colunas[idx.turno] || '',
-          posto: colunas[idx.posto] || ''
+          data: obterColuna(colunas, idx.data),
+          evento: obterColuna(colunas, idx.evento),
+          seoe: obterColuna(colunas, idx.seoe),
+          seoc: obterColuna(colunas, idx.seoc),
+          local: obterColuna(colunas, idx.local),
+          obs: obterColuna(colunas, idx.obs),
+          viaturas: obterColuna(colunas, idx.viaturas),
+          centro: obterColuna(colunas, idx.centro),
+          turno: obterColuna(colunas, idx.turno),
+          posto: obterColuna(colunas, idx.posto)
         };
       });
 
-      const linhaComCentro = todosOsItens.find(item => item.centro && item.centro.trim());
-      const centroExecutivo = linhaComCentro ? linhaComCentro.centro.trim() : '-';
+      const linhaComCentro = todosOsItens.find(
+        (item) => item.centro && item.centro.trim()
+      );
+
+      const centroExecutivo = linhaComCentro
+        ? linhaComCentro.centro.trim()
+        : "-";
 
       const turnosInfo = [
         ...new Set(
           todosOsItens
-            .filter(item => item.turno && item.turno.trim())
-            .map(item => item.posto ? `${item.turno} · ${item.posto}` : item.turno)
+            .filter((item) => item.turno && item.turno.trim())
+            .map((item) =>
+              item.posto
+                ? `${item.turno} · ${item.posto}`
+                : item.turno
+            )
         )
       ];
 
-      const registros = todosOsItens.filter(item => item.data && item.data.trim());
+      const registros = todosOsItens.filter(
+        (item) => item.data && item.data.trim()
+      );
 
       return {
         registros,
@@ -934,41 +1044,39 @@
     }
 
     function aplicarFiltroDia() {
-      const valor = document.getElementById('filtroDiaSemana').value;
-      const blocos = document.querySelectorAll('.day-container');
+      const valor = document.getElementById("filtroDiaSemana").value;
+      const blocos = document.querySelectorAll(".day-container[data-dia-semana]");
 
-      blocos.forEach(bloco => {
-        const diaAttr = bloco.getAttribute('data-dia-semana');
-        if (valor === 'todos') {
-          bloco.style.display = '';
-        } else if (String(diaAttr) === String(valor)) {
-          bloco.style.display = '';
+      blocos.forEach((bloco) => {
+        const diaAttr = bloco.getAttribute("data-dia-semana");
+
+        if (valor === "todos" || diaAttr === valor) {
+          bloco.style.display = "";
         } else {
-          bloco.style.display = 'none';
+          bloco.style.display = "none";
         }
       });
     }
 
     const estiloPorTipo = {
-      'Acompanhamento em Evento': {
-        classe: 'accent-green',
-        pill: 'background: rgba(75,122,90,0.15); color: #d1dfd6; border: 1px solid rgba(75,122,90,0.18);'
+      "Acompanhamento em Evento": {
+        classe: "accent-green",
+        pill: "background: rgba(75,122,90,0.15); color: #d1dfd6; border: 1px solid rgba(75,122,90,0.18);"
       },
-      'Viagem': {
-        classe: 'accent-blue',
-        pill: 'background: rgba(59,130,246,0.14); color: #c9dcff; border: 1px solid rgba(59,130,246,0.18);'
+      Viagem: {
+        classe: "accent-blue",
+        pill: "background: rgba(59,130,246,0.14); color: #c9dcff; border: 1px solid rgba(59,130,246,0.18);"
       },
-      'Padrão': {
-        classe: 'accent-violet',
-        pill: 'background: rgba(71,85,105,0.16); color: #cad3e2; border: 1px solid rgba(71,85,105,0.18);'
+      Padrão: {
+        classe: "accent-violet",
+        pill: "background: rgba(71,85,105,0.16); color: #cad3e2; border: 1px solid rgba(71,85,105,0.18);"
       }
     };
 
-    // CORREÇÃO: renderizarPainel recebe o objeto com registros + centro executivo + turnos
     function renderizarPainel(payload) {
       const dados = payload.registros || [];
       const agrupados = {};
-      const centroExecutivo = payload.centroExecutivo || '-';
+      const centroExecutivo = payload.centroExecutivo || "-";
       const linhasTurno = payload.turnosInfo || [];
 
       const inicioSemana = obterInicioSemanaDomingo(new Date());
@@ -977,27 +1085,32 @@
       let totalEventosSemana = 0;
       let totalViagensSemana = 0;
 
-      document.getElementById('periodoSemanaEventos').textContent =
-        `${formatarDDMM(inicioSemana)} - ${formatarDDMM(fimSemana)}`;
-      document.getElementById('periodoSemanaViagens').textContent =
+      document.getElementById("periodoSemanaEventos").textContent =
         `${formatarDDMM(inicioSemana)} - ${formatarDDMM(fimSemana)}`;
 
-      dados.forEach(item => {
-        const data = (item.data || '').trim();
+      document.getElementById("periodoSemanaViagens").textContent =
+        `${formatarDDMM(inicioSemana)} - ${formatarDDMM(fimSemana)}`;
+
+      dados.forEach((item) => {
+        const data = String(item.data || "").trim();
+
         if (!data) return;
 
         item.tipo = definirTipoAutomatico(item);
 
         const dataObj = converterDataParaAnoAtual(data);
+
         if (dataObj && dataObj >= inicioSemana && dataObj <= fimSemana) {
-          if (item.tipo === 'Acompanhamento em Evento') {
+          if (item.tipo === "Acompanhamento em Evento") {
             totalEventosSemana++;
           } else {
             totalViagensSemana++;
           }
         }
 
-        if (!agrupados[data]) agrupados[data] = [];
+        if (!agrupados[data]) {
+          agrupados[data] = [];
+        }
 
         agrupados[data].push({
           evento: item.evento,
@@ -1010,13 +1123,20 @@
         });
       });
 
-      document.getElementById('centroExecutivoNome').textContent = centroExecutivo || '-';
-      document.getElementById('turnoMesclado').textContent =
-        linhasTurno.length ? linhasTurno.join('\n') : '-';
+      document.getElementById("centroExecutivoNome").textContent =
+        centroExecutivo || "-";
 
-      document.getElementById('totalEventosSemana').textContent = totalEventosSemana;
-      document.getElementById('totalViagensSemana').textContent = totalViagensSemana;
-      document.getElementById('totalDias').textContent = Object.keys(agrupados).length;
+      document.getElementById("turnoMesclado").textContent =
+        linhasTurno.length ? linhasTurno.join("\n") : "-";
+
+      document.getElementById("totalEventosSemana").textContent =
+        totalEventosSemana;
+
+      document.getElementById("totalViagensSemana").textContent =
+        totalViagensSemana;
+
+      document.getElementById("totalDias").textContent =
+        Object.keys(agrupados).length;
 
       const datasOrdenadas = Object.keys(agrupados).sort((a, b) => {
         const dataA = converterDataParaAnoAtual(a);
@@ -1029,26 +1149,40 @@
         return dataA.getTime() - dataB.getTime();
       });
 
-      let html = '';
+      let html = "";
 
-      datasOrdenadas.forEach(data => {
+      datasOrdenadas.forEach((data) => {
         const dataObj = converterDataParaAnoAtual(data);
         const indiceDiaSemana = diaSemanaPorDataTexto(data);
-        const diaSemana = dataObj ? diasSemana[dataObj.getDay()] : 'Dia não identificado';
+
+        const diaSemana = Number.isInteger(indiceDiaSemana)
+          ? diasSemana[indiceDiaSemana]
+          : "Dia não identificado";
 
         let contadorEvento = 0;
         let contadorViagem = 0;
 
+        const classeDia = Number.isInteger(indiceDiaSemana)
+          ? `dia-${indiceDiaSemana}`
+          : "";
+
+        const atributoDia = Number.isInteger(indiceDiaSemana)
+          ? indiceDiaSemana
+          : "";
+
         html += `
-          <section class="day-container dia-${indiceDiaSemana}"
-                   data-dia-semana="${indiceDiaSemana}">
+          <section
+            class="day-container ${classeDia}"
+            data-dia-semana="${atributoDia}"
+          >
             <div class="day-header">
               <div>
                 <div class="day-kicker">Dia da operação</div>
-                <div class="dia">${diaSemana}</div>
+                <div class="dia">${escapeHTML(diaSemana)}</div>
               </div>
+
               <div class="data">
-                <div class="data-text">${data}</div>
+                <div class="data-text">${escapeHTML(data)}</div>
                 <div class="data-chip">${agrupados[data].length} agenda(s)</div>
               </div>
             </div>
@@ -1059,12 +1193,14 @@
 
         agrupados[data].forEach((item) => {
           const estilo = estiloPorTipo[item.tipo] || estiloPorTipo.Padrão;
+
           const maps =
-            'https://www.google.com/maps/search/?api=1&query=' +
-            encodeURIComponent(item.local || '');
+            "https://www.google.com/maps/search/?api=1&query=" +
+            encodeURIComponent(item.local || "");
 
           let tituloSequencial;
-          if (item.tipo === 'Acompanhamento em Evento') {
+
+          if (item.tipo === "Acompanhamento em Evento") {
             contadorEvento += 1;
             tituloSequencial = `Evento ${contadorEvento}`;
           } else {
@@ -1076,48 +1212,54 @@
             <article class="card ${estilo.classe}">
               <div class="card-inner">
                 <div class="event-pill" style="${estilo.pill}">
-                  ${item.tipo}
+                  ${escapeHTML(item.tipo)}
                 </div>
 
                 <div class="viagem-header">
                   <div class="viagem-title">
-                    ${item.local || 'Destino não informado'}
+                    ${escapeHTML(item.local || "Destino não informado")}
                   </div>
-                  <div class="viagem-tag">${tituloSequencial}</div>
+
+                  <div class="viagem-tag">
+                    ${escapeHTML(tituloSequencial)}
+                  </div>
                 </div>
 
                 <div class="label-group">
                   <div class="label-box box-seoc">
                     <div class="label">Acompanhamento SEOC/SESA</div>
-                    <div class="valor ${!item.seoc ? 'muted' : ''}">
-                      ${item.seoc || '-'}
+                    <div class="valor ${!item.seoc ? "muted" : ""}">
+                      ${escapeHTML(item.seoc || "-")}
                     </div>
                   </div>
 
                   <div class="label-box box-seoe">
                     <div class="label">Acompanhamento SEOE</div>
-                    <div class="valor ${!item.seoe ? 'muted' : ''}">
-                      ${item.seoe || '-'}
+                    <div class="valor ${!item.seoe ? "muted" : ""}">
+                      ${escapeHTML(item.seoe || "-")}
                     </div>
                   </div>
 
                   <div class="label-box box-evento">
                     <div class="value-pill">Evento</div>
-                    <div class="valor ${!item.evento ? 'muted' : ''}">
-                      ${item.evento || '-'}
+                    <div class="valor ${!item.evento ? "muted" : ""}">
+                      ${escapeHTML(item.evento || "-")}
                     </div>
                   </div>
 
                   <div class="label-box box-viaturas">
                     <div class="value-pill">Viaturas</div>
-                    <div class="valor ${!item.viaturas ? 'muted' : ''}">
-                      ${item.viaturas || '-'}
+                    <div class="valor ${!item.viaturas ? "muted" : ""}">
+                      ${escapeHTML(item.viaturas || "-")}
                     </div>
                   </div>
                 </div>
 
                 <div class="maps-row">
-                  <span class="maps-info">Visualizar localização no Google Maps</span>
+                  <span class="maps-info">
+                    Visualizar localização no Google Maps
+                  </span>
+
                   <a
                     class="maps-btn"
                     href="${maps}"
@@ -1131,8 +1273,8 @@
 
                 <div class="label-box box-obs" style="margin-top: 12px;">
                   <div class="value-pill">Observações</div>
-                  <div class="valor ${!item.obs ? 'muted' : ''}">
-                    ${item.obs || '-'}
+                  <div class="valor ${!item.obs ? "muted" : ""}">
+                    ${escapeHTML(item.obs || "-")}
                   </div>
                 </div>
               </div>
@@ -1146,36 +1288,57 @@
         `;
       });
 
-      document.getElementById('grid').innerHTML = html || `
-        <section class="day-container">
-          <div class="dia">Nenhuma viagem ou evento.</div>
-          <div class="valor" style="margin-top: 8px;"></div>
-        </section>
-      `;
+      document.getElementById("grid").innerHTML =
+        html ||
+        `
+          <section class="day-container">
+            <div class="dia">Nenhuma viagem ou evento.</div>
+            <div class="valor" style="margin-top: 8px;">
+              Verifique os registros da planilha.
+            </div>
+          </section>
+        `;
 
       aplicarFiltroDia();
     }
 
     async function carregarDadosPlanilha() {
       try {
-        const resposta = await fetch(URL_CSV);
+        const resposta = await fetch(URL_CSV, {
+          cache: "no-store"
+        });
+
+        if (!resposta.ok) {
+          throw new Error(`Erro HTTP: ${resposta.status}`);
+        }
+
         const texto = await resposta.text();
         const dados = normalizarDadosCSV(texto);
+
         renderizarPainel(dados);
       } catch (erro) {
-        console.error('Erro ao carregar planilha:', erro);
-        document.getElementById('centroExecutivoNome').textContent = '-';
-        document.getElementById('turnoMesclado').textContent = '-';
-        document.getElementById('grid').innerHTML = `
+        console.error("Erro ao carregar planilha:", erro);
+
+        document.getElementById("centroExecutivoNome").textContent = "-";
+        document.getElementById("turnoMesclado").textContent = "-";
+        document.getElementById("totalEventosSemana").textContent = "0";
+        document.getElementById("totalViagensSemana").textContent = "0";
+        document.getElementById("totalDias").textContent = "0";
+
+        document.getElementById("grid").innerHTML = `
           <section class="day-container">
             <div class="dia">Erro ao carregar dados</div>
-            <div class="valor" style="margin-top: 8px;"></div>
+            <div class="valor" style="margin-top: 8px;">
+              Verifique se a planilha está publicada como CSV e se o link está correto.
+            </div>
           </section>
         `;
       }
     }
 
-    document.getElementById('filtroDiaSemana').addEventListener('change', aplicarFiltroDia);
+    document
+      .getElementById("filtroDiaSemana")
+      .addEventListener("change", aplicarFiltroDia);
 
     atualizarHoje();
     carregarDadosPlanilha();
