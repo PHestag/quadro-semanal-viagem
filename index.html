@@ -622,11 +622,6 @@
       </div>
 
       <div class="toolbar">
-        <select id="filtroVisualizacao">
-          <option value="semana">Semana atual</option>
-          <option value="passadas">Viagens passadas</option>
-        </select>
-
         <select id="filtroDiaSemana">
           <option value="todos">Todos os dias</option>
           <option value="0">Domingo</option>
@@ -747,21 +742,21 @@
       let match;
 
       // DD/MM/AAAA ou DD-MM-AAAA
-      match = texto.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
+      match = texto.match(/^(\\d{1,2})[\\/\\-](\\d{1,2})[\\/\\-](\\d{4})$/);
       if (match) {
         dia = Number(match[1]);
         mes = Number(match[2]);
         ano = Number(match[3]);
       } else {
         // AAAA-MM-DD ou AAAA/MM/DD
-        match = texto.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})$/);
+        match = texto.match(/^(\\d{4})[\\/\\-](\\d{1,2})[\\/\\-](\\d{1,2})$/);
         if (match) {
           ano = Number(match[1]);
           mes = Number(match[2]);
           dia = Number(match[3]);
         } else {
           // DD/MM sem ano: usa o ano atual
-          match = texto.match(/^(\d{1,2})[\/]\s*(\d{1,2})$/);
+          match = texto.match(/^(\\d{1,2})[\\/]\\s*(\\d{1,2})$/);
           if (match) {
             dia = Number(match[1]);
             mes = Number(match[2]);
@@ -938,64 +933,20 @@
       };
     }
 
-    function aplicarFiltros() {
-      const filtroVisualizacao = document.getElementById('filtroVisualizacao').value;
-      const filtroDia = document.getElementById('filtroDiaSemana').value;
+    function aplicarFiltroDia() {
+      const valor = document.getElementById('filtroDiaSemana').value;
       const blocos = document.querySelectorAll('.day-container');
 
-      const hoje = new Date();
-      hoje.setHours(0, 0, 0, 0);
-
-      const inicioSemana = obterInicioSemanaDomingo(hoje);
-      const fimSemana = obterFimSemanaSabado(hoje);
-
       blocos.forEach(bloco => {
-        const dataTexto = bloco.getAttribute('data-data');
         const diaAttr = bloco.getAttribute('data-dia-semana');
-        const dataBloco = converterDataParaAnoAtual(dataTexto);
-
-        let mostrar = true;
-
-        if (filtroVisualizacao === 'passadas') {
-          // Somente ontem e datas anteriores.
-          mostrar = dataBloco && dataBloco < hoje;
+        if (valor === 'todos') {
+          bloco.style.display = '';
+        } else if (String(diaAttr) === String(valor)) {
+          bloco.style.display = '';
         } else {
-          // Aba principal: somente a semana atual.
-          mostrar = dataBloco && dataBloco >= inicioSemana && dataBloco <= fimSemana;
+          bloco.style.display = 'none';
         }
-
-        if (mostrar && filtroDia !== 'todos') {
-          mostrar = String(diaAttr) === String(filtroDia);
-        }
-
-        bloco.style.display = mostrar ? '' : 'none';
       });
-
-      // Mensagem quando não houver registros no filtro escolhido.
-      const grid = document.getElementById('grid');
-      const mensagemExistente = document.getElementById('mensagemFiltroVazio');
-      if (mensagemExistente) mensagemExistente.remove();
-
-      const algumVisivel = Array.from(blocos).some(bloco => bloco.style.display !== 'none');
-
-      if (!algumVisivel && blocos.length) {
-        const mensagem = document.createElement('section');
-        mensagem.id = 'mensagemFiltroVazio';
-        mensagem.className = 'day-container';
-        mensagem.innerHTML = `
-          <div class="dia">
-            ${filtroVisualizacao === 'passadas'
-              ? 'Nenhuma viagem ou evento anterior encontrado.'
-              : 'Nenhuma viagem ou evento na semana atual.'}
-          </div>
-        `;
-        grid.appendChild(mensagem);
-      }
-    }
-
-    // Mantém compatibilidade com chamadas antigas.
-    function aplicarFiltroDia() {
-      aplicarFiltros();
     }
 
     const estiloPorTipo = {
@@ -1065,8 +1016,6 @@
 
       document.getElementById('totalEventosSemana').textContent = totalEventosSemana;
       document.getElementById('totalViagensSemana').textContent = totalViagensSemana;
-      // O total exibido continua sendo referente aos dados carregados;
-      // a visualização é controlada pelas abas.
       document.getElementById('totalDias').textContent = Object.keys(agrupados).length;
 
       const datasOrdenadas = Object.keys(agrupados).sort((a, b) => {
@@ -1092,8 +1041,7 @@
 
         html += `
           <section class="day-container dia-${indiceDiaSemana}"
-                   data-dia-semana="${indiceDiaSemana}"
-                   data-data="${data}">
+                   data-dia-semana="${indiceDiaSemana}">
             <div class="day-header">
               <div>
                 <div class="day-kicker">Dia da operação</div>
@@ -1205,7 +1153,7 @@
         </section>
       `;
 
-      aplicarFiltros();
+      aplicarFiltroDia();
     }
 
     async function carregarDadosPlanilha() {
@@ -1227,8 +1175,7 @@
       }
     }
 
-    document.getElementById('filtroVisualizacao').addEventListener('change', aplicarFiltros);
-    document.getElementById('filtroDiaSemana').addEventListener('change', aplicarFiltros);
+    document.getElementById('filtroDiaSemana').addEventListener('change', aplicarFiltroDia);
 
     atualizarHoje();
     carregarDadosPlanilha();
