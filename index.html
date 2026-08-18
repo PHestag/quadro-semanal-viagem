@@ -747,21 +747,21 @@
       let match;
 
       // DD/MM/AAAA ou DD-MM-AAAA
-      match = texto.match(/^(\\d{1,2})[\\/\\-](\\d{1,2})[\\/\\-](\\d{4})$/);
+      match = texto.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
       if (match) {
         dia = Number(match[1]);
         mes = Number(match[2]);
         ano = Number(match[3]);
       } else {
         // AAAA-MM-DD ou AAAA/MM/DD
-        match = texto.match(/^(\\d{4})[\\/\\-](\\d{1,2})[\\/\\-](\\d{1,2})$/);
+        match = texto.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})$/);
         if (match) {
           ano = Number(match[1]);
           mes = Number(match[2]);
           dia = Number(match[3]);
         } else {
           // DD/MM sem ano: usa o ano atual
-          match = texto.match(/^(\\d{1,2})[\\/]\\s*(\\d{1,2})$/);
+          match = texto.match(/^(\d{1,2})[\/]\s*(\d{1,2})$/);
           if (match) {
             dia = Number(match[1]);
             mes = Number(match[2]);
